@@ -1,0 +1,21 @@
+hexa = input("enter: ")
+
+output = []
+lst = []
+for a in range(int(len(hexa)/2)):
+    letter = hexa[a*2:2*(a+1)]
+    lst += [letter]
+for b in range(len(lst)):
+    num = eval("0x" + lst[b])
+    output += [num]
+print (output)
+
+asci = output
+#input("enter: ")
+#asci = asci.split(" ")
+
+word = ''
+for a in range(len(asci)):
+    letter = chr(int(asci[a]))
+    word += letter
+print (word)
