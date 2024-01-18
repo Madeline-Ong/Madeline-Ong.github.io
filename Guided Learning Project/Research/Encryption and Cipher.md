@@ -69,7 +69,8 @@ One would identify the most often occurring letters in the ciphertext and theori
 ## Pattern Recognition 
 Identifying patterns in ciphertext can provide insights into the underlying structure of a substitution or transposition cipher.
 
-## Mathematical Operations can be reversed
+## Mathematical Operations that are difficult to reverse 
+Matrix 
 
 
 # How to make cipher harder to crack
