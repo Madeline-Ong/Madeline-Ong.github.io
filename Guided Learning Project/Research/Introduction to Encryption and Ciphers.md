@@ -1,9 +1,8 @@
 # Introduction 
 As I started this project my Learning Facilitator asked me, what is a cipher and I realised I did not even know how to describe it. So I started my research on what a cipher is.
 
-Cipher and encryption is often interchangeable. 
+The terms cipher and encryption are often interchangeable. 
 
-![Test image](../docs/assets/img/base.jpeg)
 
 <a name="history"></a>
 ## History & Their Importance
@@ -75,7 +74,12 @@ Multiple ciphertext characters can be used to represent a single plaintext chara
 <a name="polygraphic"></a>
 ### Polygraphic / Block Ciphers
 * Hill Cipher 
+
+
 * Playfair Cipher (digraph cipher)
+
+
+* Polybios Square Cipher
 
 <a name="polyalphabetic"></a>
 ### Polyalphabetic Ciphers
@@ -100,10 +104,12 @@ The cipher would read:
 Spacing is optional in the ciphertext as it would not be related to the spacing in the plaintext and would not give away any information. However, the ciphertext is split into groups of 5 using spacing so that the ciphertext is more readable. 
 
 <a name="scytale"></a>
-* Scytale
+* Scytale Cipher
+One of the oldest known exmaples is the Spartan scytale, where the Ancient Greeks would wrap a ribbon around a cylindrical rod of uniform circumference before writing a message on the ribbon horizontally. The key would set the number of characters in each row. 
+
+
+
 is a simple version of matrix transposition cipher
-set number of columns
-and in 
 
 <a name="columnar_transposition"></a>
 * Columnar Transposition
