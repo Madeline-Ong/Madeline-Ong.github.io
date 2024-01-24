@@ -3,6 +3,8 @@ As I started this project my Learning Facilitator asked me, what is a cipher and
 
 Cipher and encryption is often interchangeable. 
 
+![Test image](/main/docs/assets/img/base.jpeg)
+
 <a name="history"></a>
 ## History & Their Importance
 The first cipher was created by Julius Caesar in times of war where information needed to be kept secret so that even if the enemy got their hands on the message, they would not be able to understand it. He rotated each letter of the plaintext forward by 3 places such that A became D, B became E, etc. Even now, encryption is used to secure sensitive information before it is sent over modern communication. 
