@@ -46,6 +46,7 @@ The ciphers under this category of "substitution" replaces each letter, in a way
 ### Monoalphabetic Ciphers
 Generally, a simple one-to-one mapping of letters is used. For example, each 'A' in the plaintext is replaced by the same letter in the ciphertext.
 
+
 Examples include: 
 #### Caesar Cipher: 
 This cipher is named after the cipher Julius Caesar created. It is also known as Shift or Rotation Cipher as each letter in the plaintext is shifted or rotated forward by a fixed number of positions (also called the key) down the alphabet. For example, if the key is 3, 'A' in the plaintext would be 'D' in the ciphertext. 
@@ -63,6 +64,7 @@ a = y(x) + z
 #### Pigpen Cipher / Templar Cipher
 Letters are replaced with symbols.
 
+Pigpen 
 
 #### Mixed Alphabet Cipher: Each letter is replaced by a corresponding letter from a mixed-up or randomly generated alphabet.
   * Vatsyayana Cipher: 26 letters paired into 13 pairs, substitution using those pairs. 
