@@ -1,10 +1,12 @@
-# Intro
+# Introduction 
 As I started this project my Learning Facilitator asked me, what is a cipher and I realised I did not even know how to describe it. So I started my research on what a cipher is.
 
+Cipher and encryption is often interchangeable. 
 
+<a name="history"></a>
 ## History & Their Importance
 The first cipher was created by Julius Caesar in times of war where information needed to be kept secret so that even if the enemy got their hands on the message, they would not be able to understand it. He rotated each letter of the plaintext forward by 3 places such that A became D, B became E, etc. Even now, encryption is used to secure sensitive information before it is sent over modern communication. 
-An example of how important ciphers are, is when Alan Turing cracked the German's Enigma cipher, which was a significant factor leading to the German's defeat. As the decryption of German communications provided the Allies with crucial information about German military plans, strategies, and activities.
+An example of how important ciphers are, is when Alan Turing cracked the German's Enigma cipher, which was a significant factor leading to the German's defeat. The decryption of German communications provided the Allies with crucial information about German military plans, strategies, and activities.
 
 - [Types of Encryption Methods](#encrypt_mtd)
   - [Substitution Ciphers](#substitution)
@@ -34,8 +36,11 @@ An example of how important ciphers are, is when Alan Turing cracked the German'
 
 <a name="encrypt_mtd"></a>
 # Types of Encryption Methods
+
 <a name="substitution"></a>
 ## Substitution Ciphers 
+The ciphers under this category of "substitution" replaces each letter, in a way the identity of the letters change. 
+
 <a name="monoalphabetic"></a>
 ### Monoalphabetic Ciphers
 Generally, a simple one-to-one mapping of letters is used. For example, each 'A' in the plaintext is replaced by the same letter in the ciphertext.
@@ -66,7 +71,7 @@ Letters are replaced with symbols.
 Multiple ciphertext characters can be used to represent a single plaintext character. This introduces ambiguity and makes frequency analysis more challenging.
 
 <a name="polygraphic"></a>
-#### Polygraphic Ciphers
+### Polygraphic / Block Ciphers
 * Hill Cipher 
 * Playfair Cipher (digraph cipher)
 
@@ -76,8 +81,10 @@ Multiple ciphertext characters can be used to represent a single plaintext chara
 * Vigenère Cipher
 * Autokey Cipher
 
+
 <a name="transposition"></a>
 ## Transposition Ciphers
+The ciphers under this category of "transposition" changes the position of the letters but the letters' "identities" do not change. For ex
 
 Examples:
 <a name="rail_fence"></a>
