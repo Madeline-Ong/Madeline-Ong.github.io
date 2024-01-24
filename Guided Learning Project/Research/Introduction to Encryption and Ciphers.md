@@ -6,14 +6,24 @@ As I started this project my Learning Facilitator asked me, what is a cipher and
 The first cipher was created by Julius Caesar in times of war where information needed to be kept secret so that even if the enemy got their hands on the message, they would not be able to understand it. Even now, encryption is used to secure sensitive information before it is sent over modern communication. 
 An example of how important ciphers are, is when Alan Turing cracked the German's Enigma cipher, which was a significant factor leading to the German's defeat. As the decryption of German communications provided the Allies with crucial information about German military plans, strategies, and activities.
 
-- Portfolio
-  - [Guided Learning Project](https://github.com/MadelineOngYingXuan/MadelineOngYingXuan.github.io/tree/bc1ba3cecc29a6dc7e53020404063fd1f2543336/Guided%20Learning%20Project)
-  - [Ciphers](https://github.com/MadelineOngYingXuan/MadelineOngYingXuan.github.io/tree/main/Ciphers)
-  - [Converters](https://github.com/MadelineOngYingXuan/MadelineOngYingXuan.github.io/tree/main/Converters)
-  - [SOS game - Tic-Tac-Toe variation](https://github.com/MadelineOngYingXuan/MadelineOngYingXuan.github.io/blob/main/SOS%20game%20code)
+- Types of Encryption Methods 
+  - [Substitution Ciphers](#substitution)
+  - [Transposition Ciphers]
+  - [Digraph cipher]
+  - [Symmetric Key Encryption]
+  - [Asymmetric Key Encryption]
+  - [Hashing]
+- Cipher Cracking
+  - [Frequency Analysis]
+  - [Pattern Recognition]
+  - [Difficult to Reverse Mathematical Operations]
+- Making Ciphers Hard to Crack
+  - [Trapdoor functions]
+  - [More Characters or Mapping Multiple Characters to 1 Plaintext Character]
+
 
 # Types of Encryption Methods
-## Substitution Ciphers
+## Substitution Ciphers #substitution
 ### Monoalphabetical Ciphers
 Generally, a simple one-to-one mapping of letters is used. For example, each 'A' in the plaintext is replaced by the same letter in the ciphertext.
 
