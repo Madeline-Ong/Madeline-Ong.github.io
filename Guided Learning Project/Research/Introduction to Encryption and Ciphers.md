@@ -23,8 +23,8 @@ An example of how important ciphers are, is when Alan Turing cracked the German'
 
 
 # Types of Encryption Methods
-## Substitution Ciphers 
 <a name="substitution"></a>
+## Substitution Ciphers 
 ### Monoalphabetical Ciphers
 Generally, a simple one-to-one mapping of letters is used. For example, each 'A' in the plaintext is replaced by the same letter in the ciphertext.
 
