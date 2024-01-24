@@ -3,7 +3,7 @@ As I started this project my Learning Facilitator asked me, what is a cipher and
 
 
 ## History & Their Importance
-The first cipher was created by Julius Caesar in times of war where information needed to be kept secret so that even if the enemy got their hands on the message, they would not be able to understand it. Even now, encryption is used to secure sensitive information before it is sent over modern communication. 
+The first cipher was created by Julius Caesar in times of war where information needed to be kept secret so that even if the enemy got their hands on the message, they would not be able to understand it. He rotated each letter of the plaintext forward by 3 places such that A became D, B became E, etc. Even now, encryption is used to secure sensitive information before it is sent over modern communication. 
 An example of how important ciphers are, is when Alan Turing cracked the German's Enigma cipher, which was a significant factor leading to the German's defeat. As the decryption of German communications provided the Allies with crucial information about German military plans, strategies, and activities.
 
 - [Types of Encryption Methods](#encrypt_mtd)
@@ -41,12 +41,24 @@ An example of how important ciphers are, is when Alan Turing cracked the German'
 Generally, a simple one-to-one mapping of letters is used. For example, each 'A' in the plaintext is replaced by the same letter in the ciphertext.
 
 Examples include: 
-* Caesar Cipher: (Also known as Shift or Rotation Cipher) Each letter in the plaintext is shifted by a fixed number of positions (also called the key) down the alphabet. For example, if the key is 3, 'A' in the plaintext would be 'D' in the ciphertext. 
-* Atbash Cipher: The alphabet is reversed such that A becomes Z, etc.
-* Affine Cipher: Each letter is mapped to its numeric equivalent, multiplied by a constant, and then shifted by another constant.
-* Pigpen Cipher: Letters are replaced with symbols.
-* Templar Cipher:
-* Mixed Alphabet Cipher: Each letter is replaced by a corresponding letter from a mixed-up or randomly generated alphabet.
+#### Caesar Cipher: 
+This cipher is named after the cipher Julius Caesar created. It is also known as Shift or Rotation Cipher as each letter in the plaintext is shifted or rotated forward by a fixed number of positions (also called the key) down the alphabet. For example, if the key is 3, 'A' in the plaintext would be 'D' in the ciphertext. 
+
+#### Atbash Cipher
+The alphabet would be reversed, such that A becomes Z, etc.
+
+#### Affine Cipher
+Each letter is mapped to its numeric equivalent, multiplied by a constant, and then shifted by another constant.
+
+For example, if a is the result, x is the numeric equivalent of the letter, y is the multiplication constant and z is the rotation constant, the formula would be:
+a = y(x) + z
+
+
+#### Pigpen Cipher / Templar Cipher
+Letters are replaced with symbols.
+
+
+#### Mixed Alphabet Cipher: Each letter is replaced by a corresponding letter from a mixed-up or randomly generated alphabet.
   * Vatsyayana Cipher: 26 letters paired into 13 pairs, substitution using those pairs. 
 
 <a name="homophonic"></a>
