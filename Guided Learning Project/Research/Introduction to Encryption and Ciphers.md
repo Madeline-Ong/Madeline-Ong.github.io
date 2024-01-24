@@ -3,7 +3,7 @@ As I started this project my Learning Facilitator asked me, what is a cipher and
 
 Cipher and encryption is often interchangeable. 
 
-![Test image](../../docs/assets/img/base.jpeg)
+![Test image](~/docs/assets/img/base.jpeg)
 
 <a name="history"></a>
 ## History & Their Importance
