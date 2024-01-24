@@ -84,7 +84,7 @@ Multiple ciphertext characters can be used to represent a single plaintext chara
 
 <a name="transposition"></a>
 ## Transposition Ciphers
-The ciphers under this category of "transposition" changes the position of the letters but the letters' "identities" do not change. For ex
+The ciphers under this category of "transposition" changes the position of the letters but the letters' "identities" do not change. For example, take the plaintext to be "Hello world!", there are 3 instances of the letter "l". The resulting ciphertext would still have 3 instances of the letter "l". 
 
 Examples:
 <a name="rail_fence"></a>
