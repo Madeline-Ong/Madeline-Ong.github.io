@@ -50,10 +50,12 @@ Generally, a simple one-to-one mapping of letters is used. For example, each 'A'
 Examples include: 
 #### Caesar Cipher: 
 This cipher is named after the cipher Julius Caesar created. It is also known as Shift or Rotation Cipher as each letter in the plaintext is shifted or rotated forward by a fixed number of positions (also called the key) down the alphabet. For example, if the key is 3, 'A' in the plaintext would be 'D' in the ciphertext. 
+
 ![Table showing letters in an exmaple of Caesar Cipher](../docs/assets/img/caesar.png)
 
 #### Atbash Cipher
 The alphabet would be reversed, such that A becomes Z, etc.
+
 ![Table showing letters in Atbash Cipher](../docs/assets/img/atbash.png)
 
 #### Affine Cipher
@@ -72,7 +74,8 @@ Pigpen Cipher, also known as  Rosicrucian cipher.
 Each letter is replaced by a corresponding letter from a mixed-up or randomly generated alphabet.
 
 ##### Vatsyayana Cipher
-The 26 letters are paired into 13 pairs, and substitution is done using those pairs. 
+The 26 letters are paired into 13 pairs, and substitution is done using those pairs. An example of this is the one given below. 
+
 ![Table showing letters in an exmaple of Vatsyayana Cipher](../docs/assets/img/vatsyayana.png)
 
 <a name="homophonic"></a>
