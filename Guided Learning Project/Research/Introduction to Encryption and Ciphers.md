@@ -50,9 +50,11 @@ Generally, a simple one-to-one mapping of letters is used. For example, each 'A'
 Examples include: 
 #### Caesar Cipher: 
 This cipher is named after the cipher Julius Caesar created. It is also known as Shift or Rotation Cipher as each letter in the plaintext is shifted or rotated forward by a fixed number of positions (also called the key) down the alphabet. For example, if the key is 3, 'A' in the plaintext would be 'D' in the ciphertext. 
+![Table showing letters in an exmaple of Caesar Cipher](../docs/assets/img/caesar.png)
 
 #### Atbash Cipher
 The alphabet would be reversed, such that A becomes Z, etc.
+![Table showing letters in Atbash Cipher](../docs/assets/img/atbash.png)
 
 #### Affine Cipher
 Each letter is mapped to its numeric equivalent, multiplied by a constant, and then shifted by another constant.
@@ -64,30 +66,39 @@ a = y(x) + z
 #### Pigpen Cipher / Templar Cipher
 Letters are replaced with symbols.
 
-Pigpen 
+Pigpen Cipher, also known as  Rosicrucian cipher.
 
-#### Mixed Alphabet Cipher: Each letter is replaced by a corresponding letter from a mixed-up or randomly generated alphabet.
-  * Vatsyayana Cipher: 26 letters paired into 13 pairs, substitution using those pairs. 
+#### Mixed Alphabet Ciphers
+Each letter is replaced by a corresponding letter from a mixed-up or randomly generated alphabet.
+
+##### Vatsyayana Cipher
+The 26 letters are paired into 13 pairs, and substitution is done using those pairs. 
+![Table showing letters in an exmaple of Vatsyayana Cipher](../docs/assets/img/vatsyayana.png)
 
 <a name="homophonic"></a>
 ### Homophonic Ciphers
 Multiple ciphertext characters can be used to represent a single plaintext character. This introduces ambiguity and makes frequency analysis more challenging.
 
+
+
 <a name="polygraphic"></a>
 ### Polygraphic / Block Ciphers
-* Hill Cipher 
+#### Hill Cipher 
 
 
-* Playfair Cipher (digraph cipher)
+#### Playfair Cipher (digraph cipher)
 
 
-* Polybios Square Cipher
+#### Polybios Square Cipher
+It is named after the ancient Greek historian Polybios. Since the Greek alphabet has 25 letters, the 5x5 square was used, where the alphabet was written in a grid format. When using English letters, I and J are given 1 space as Greek does not have a equivalent for J.
 
 <a name="polyalphabetic"></a>
 ### Polyalphabetic Ciphers
 
-* Vigenère Cipher
-* Autokey Cipher
+#### Vigenère Cipher
+
+
+#### Autokey Cipher
 
 
 <a name="transposition"></a>
@@ -96,7 +107,7 @@ The ciphers under this category of "transposition" changes the position of the l
 
 Examples:
 <a name="rail_fence"></a>
-* Rail Fence Cipher: (Also known as Zigzag cipher)
+#### Rail Fence Cipher: (Also known as Zigzag cipher)
 The plaintext is written in a zigzag pattern across a set number of rails of the fence (which are the lines) and then each line of text (each rail) is appended to the ciphertext. 
 
 The characters would start going downwards and diagonally across the rails and at the bottom, move upwards and diagonally across. 
@@ -106,19 +117,15 @@ The cipher would read:
 Spacing is optional in the ciphertext as it would not be related to the spacing in the plaintext and would not give away any information. However, the ciphertext is split into groups of 5 using spacing so that the ciphertext is more readable. 
 
 <a name="scytale"></a>
-* Scytale Cipher
+#### Scytale Cipher
 One of the oldest known exmaples is the Spartan scytale, where the Ancient Greeks would wrap a ribbon around a cylindrical rod of uniform circumference before writing a message on the ribbon horizontally. The key would set the number of characters in each row. 
 
-
-
-is a simple version of matrix transposition cipher
-
 <a name="columnar_transposition"></a>
-* Columnar Transposition
+#### Columnar Transposition
 Add level of complexity to scytale, instead of taking the text from the left-most to right-most columns, the order of which column to take the text from (also known as key for this cipher) is changed. 
 
 <a name="matrix_transposition"></a>
-* Matrix Transposition Cipher
+#### Matrix Transposition Cipher
 
 
 <a name="symmetric"></a>
