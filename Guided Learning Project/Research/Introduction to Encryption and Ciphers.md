@@ -54,6 +54,12 @@ This cipher is named after the cipher Julius Caesar created. It is also known as
 ![Table showing letters in an exmaple of Caesar Cipher](../docs/assets/img/caesar.png)
 
 #### Atbash Cipher
+The earliest instances of this cipher are in the Hebrew Bible, the Book of Jeremiah. The exact reason for the usage of the cipher is not known. It could have been to protect the prophet or the later scribe, as the prophet, Jeremiah, was given the task of publically announcing Cod's punishment on the nations, which included the Babylonian empire, in Jeremiah 25. “<sup>15</sup>This is what the LORD, the God of Israel, said to me: ‘Take from my hand this cup filled with the wine of my wrath and make all the nations to whom I send you drink it. . . . <sup>26</sup>And after all of them, the king of Sheshak will drink it too.'”
+
+(the nations shall drink the cup of God’s wrath)
+
+[…] and all the kings of the north, near and far, one after the other, and all the kingdoms of the world which are on the face of the earth, and the king of Sheshach shall drink after them.
+
 The alphabet would be reversed, such that A becomes Z, etc.
 
 ![Table showing letters in Atbash Cipher](../docs/assets/img/atbash.png)
@@ -62,7 +68,7 @@ The alphabet would be reversed, such that A becomes Z, etc.
 Each letter is mapped to its numeric equivalent, multiplied by a constant, and then shifted by another constant.
 
 For example, if a is the result, x is the numeric equivalent of the letter, y is the multiplication constant and z is the rotation constant, the formula would be:
-a = y(x) + z
+a =  (yx + z) mod 26
 
 
 ### Geometric Cipher
