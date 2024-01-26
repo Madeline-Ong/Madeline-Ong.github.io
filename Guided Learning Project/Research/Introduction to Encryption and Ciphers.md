@@ -65,18 +65,34 @@ For example, if a is the result, x is the numeric equivalent of the letter, y is
 a = y(x) + z
 
 
-#### Pigpen Cipher / Templar Cipher
-Letters are replaced with symbols.
+### Geometric Cipher
+In this category, the letters are replaced with geometric symbols.
 
-Pigpen Cipher, also known as  Rosicrucian cipher.
+#### Pigpen Cipher 
+
+![Pigpen Cipher](../docs/assets/img/pigpen.png)
+
+
+#### Rosicrucian Cipher 
+
+
+
+#### Templar Cipher
+The Templar Cipher is said to have been used by the Knights Templar, a group of rich warrior monks, who needed a way to encrypt their notes so that if bandits robbed travellers, the note would be useless to the bandits. For the Knights Templar, the notes told them how much money the person had stored with them. 
+
+![Templar Cipher](../docs/assets/img/templar.png)
 
 #### Mixed Alphabet Ciphers
 Each letter is replaced by a corresponding letter from a mixed-up or randomly generated alphabet.
+
 
 ##### Vatsyayana Cipher
 The 26 letters are paired into 13 pairs, and substitution is done using those pairs. An example of this is the one given below. 
 
 ![Table showing letters in an exmaple of Vatsyayana Cipher](../docs/assets/img/vatsyayana.png)
+
+In the example given, the letter 'A' would be substituted with 'L' and vice versa, 'B' with the letter 'P', etc.
+
 
 <a name="homophonic"></a>
 ### Homophonic Ciphers
@@ -93,7 +109,7 @@ Multiple ciphertext characters can be used to represent a single plaintext chara
 
 
 #### Polybios Square Cipher
-It is named after the ancient Greek historian Polybios. Since the Greek alphabet has 25 letters, the 5x5 square was used, where the alphabet was written in a grid format. When using English letters, I and J are given 1 space as Greek does not have a equivalent for J.
+It is named after the ancient Greek historian Polybios. Since the Greek alphabet has 25 letters, the 5x5 square was used, where the alphabet was written in a grid format. When using English letters, I and J are typically combined and given 1 space. 
 
 <a name="polyalphabetic"></a>
 ### Polyalphabetic Ciphers
@@ -121,11 +137,13 @@ Spacing is optional in the ciphertext as it would not be related to the spacing 
 
 <a name="scytale"></a>
 #### Scytale Cipher
-One of the oldest known exmaples is the Spartan scytale, where the Ancient Greeks would wrap a ribbon around a cylindrical rod of uniform circumference before writing a message on the ribbon horizontally. The key would set the number of characters in each row. 
+One of the oldest known examples is the Spartan scytale, where the Ancient Greeks would wrap a ribbon around a cylindrical rod of uniform circumference before writing a message on the ribbon horizontally. The key would set the number of characters in each row. 
+
 
 <a name="columnar_transposition"></a>
-#### Columnar Transposition
-Add level of complexity to scytale, instead of taking the text from the left-most to right-most columns, the order of which column to take the text from (also known as key for this cipher) is changed. 
+#### Columnar Transposition Cipher
+This cipher adds a level of complexity to the scytale cipher, instead of taking the text from the left-most to the right-most columns, the order of which column to take the text from (also known as the key for this cipher) is changed. 
+
 
 <a name="matrix_transposition"></a>
 #### Matrix Transposition Cipher
@@ -173,10 +191,11 @@ One would identify the most often occurring letters in the ciphertext and theori
 
 <a name="pattern_recog"></a>
 ## Pattern Recognition 
-Identifying patterns in ciphertext can provide insights into the underlying structure of a substitution or transposition cipher.
+Identifying patterns in ciphertext can provide insights into the underlying structure of a substitution or transposition cipher. After a letter is discovered, the text can then be checked for possible letters after it. For example for the letter 't', 'h' is often the letter after it. 
+
 
 ## Mathematical Operations that are difficult to reverse 
-Matrix 
+No matrix division
 
 
 # How to make cipher harder to crack
