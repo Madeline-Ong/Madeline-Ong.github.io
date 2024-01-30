@@ -1,7 +1,16 @@
-# This uses the ASCII table so upper and lowercase letters, numbers, and symbols are all included here.
-# The range of the key would be 95 since the min chr num is 32 (' ') and max is 126 ('~').
+# This version uses the ASCII table so upper and lowercase letters, numbers, and symbols are all included here.
 
-####### Encryption ########
+# Although I didn't know of it as I was coming up with the idea in secondary school, my cipher is under the category of Affine Substitution Cipher.
+# Where each letter is mapped to its numeric equivalent(x), multiplied by a constant(y), then shifted by another constant(y), and then get the remainder using mod 26 to shift within the range of the alphabet. 
+# Affine Cipher formula:  chr = (yx + z) mod 26
+# But in my case, the formula is different. Instead of the multiplication and rotational constants, y and z, my cipher uses the index of the chr and the key, multiplied together. 
+#     In this version of my cipher, using the ASCII, the formula still uses the numerical equivalent(x) after subtracting 31, but it is shifted by the index of the chr(y) multiplied by the key(k). 
+#     The modulus is also changed to 95 as the range of the key value would be 95 since the min chr num is 32 (' ') and max is 126 ('~').
+#     The subtracting 31 is so that x stays within the range of ASCII unicode English chr (32-126). Then to convert back to the ASCII unicode English chr range, I add 31. 
+# Formula with ASCII:     chr = (x - 31 + yk) mod 95 + 31
+
+
+##################### Encryption ######################
 def encryption():
     from random import randint
     def e_key_check(key):
@@ -47,7 +56,7 @@ def encryption():
         
     print(ciphertext + '\n')
 
-####### Decryption ########
+##################### Decryption ######################
 def decryption():
     def d_key_check(key):
         global key_max
@@ -100,7 +109,7 @@ def decryption():
     print()
 
 
-####### Choosing encrypt or decrypt ########
+##################### Choosing encrypt or decrypt ######################
 
 key_max = 95
 choice = None
