@@ -62,6 +62,26 @@ The earliest instances of this cipher are in the Hebrew Bible, the Book of Jerem
 
 The alphabet would be reversed, such that A becomes Z, etc.
 
+##### Code
+```
+import string
+
+msg = input('Text: ')
+lower = list(string.ascii_lowercase)
+upper = list(string.ascii_uppercase)
+result = ''
+
+for letter in msg:
+    if letter in lower:
+        result += lower[25 - lower.index(letter)]
+    elif letter in upper:
+        result += upper[25 - upper.index(letter)]
+    else:
+        result += letter
+print(result)
+
+```
+
 ![Table showing letters in Atbash Cipher](../docs/assets/img/atbash.png)
 
 #### Affine Cipher
@@ -140,6 +160,43 @@ The characters would start going downwards and diagonally across the rails and a
 The cipher would read: 
 
 Spacing is optional in the ciphertext as it would not be related to the spacing in the plaintext and would not give away any information. However, the ciphertext is split into groups of 5 using spacing so that the ciphertext is more readable. 
+
+##### Code
+```
+rails = input('Enter your number of rails: ')
+while rails.isdigit() == False:
+    print('\nPlease try again, the number of rails should be an integer.')
+    rails = input('Enter your number of rails: ')
+
+rails = int(rails)
+print()
+plaintext = input('Enter your plaintext: ').strip()
+ciphertext = [''] * rails
+
+down = True
+row = 0
+for char in range(len(plaintext)):
+    ciphertext[row] += plaintext[char]
+    if row < (rails-1) and down == True:
+        row += 1
+    elif row > 0 and down == False:
+        row -= 1
+
+    if row == 0 or row == (rails-1):
+        down = not down
+
+ciphertext = ''.join(ciphertext)
+#print(ciphertext)
+
+### Optional (for the spacing) ###
+for index in range(0, len(ciphertext)):
+    if index % 6 == 0:
+        ciphertext = ciphertext[:index] + ' ' + ciphertext[index:]
+
+ciphertext = ciphertext.strip()
+print()
+print(ciphertext)
+```
 
 <a name="scytale"></a>
 #### Scytale Cipher
