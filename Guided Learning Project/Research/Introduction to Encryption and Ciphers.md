@@ -40,7 +40,7 @@ An example of how important ciphers are, is when Alan Turing cracked the German'
 
 <a name="substitution"></a>
 ## Substitution Ciphers 
-The ciphers under this category of "substitution" replaces each letter, in a way the identity of the letters change. 
+The ciphers under this category of "substitution" replace each letter, in a way the identity of the letters changes. 
 
 <a name="monoalphabetic"></a>
 ### Monoalphabetic Ciphers
