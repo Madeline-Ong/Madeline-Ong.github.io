@@ -230,7 +230,7 @@ One of the oldest known examples is the Spartan scytale, where the Ancient Greek
 
 For example, if the plaintext is 'WE.ARE.DISCOVERED.FLEE.AT.ONCE.', the message would be written, while ignoring the seperator. 
 
-![Table showing letters in an exmaple of Scytale Cipher](../docs/assets/img/scytale.png)
+![Table showing letters in an example of Scytale Cipher](../docs/assets/img/scytale.png)
 
 Then when the ciphertext is combined together, the seperator would be added back in the same position so that the recipent would be able to reconstruct the message. 
 
@@ -238,6 +238,10 @@ Then when the ciphertext is combined together, the seperator would be added back
 <a name="columnar_transposition"></a>
 #### Columnar Transposition Cipher
 This cipher adds a level of complexity to the scytale cipher, instead of taking the text from the left-most to the right-most columns, the order of which column to take the text from (also known as the key for this cipher) is changed. 
+
+In the example below, it is similar to the one for the Scytale cipher but the key, which sets the order is 362145. The ciphertext would be 'AC.DTD.EECESEAWIR.EERO.FO.EVLN'.
+
+![Table showing letters in an example of Columnar Transposition Cipher](../docs/assets/img/columnar_transposition.png)
 
 
 <a name="matrix_transposition"></a>
@@ -274,7 +278,6 @@ Adding a unique value (salt) to the data before hashing, enhances security by pr
 
 <a name="cipher_cracking"></a>
 # Cipher Cracking
-Since ciphers use 
 Written below are some methods frequently used to crack or analyse ciphers. 
 
 <a name="freq_analysis"></a>
