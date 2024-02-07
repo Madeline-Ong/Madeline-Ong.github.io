@@ -177,11 +177,15 @@ The plaintext is written in a zigzag pattern across a set number of rails of the
 
 The characters would start going downwards and diagonally across the rails and at the bottom, move upwards and diagonally across. 
 
-The cipher would read: 
+An example is using the plaintext 'WEAREDISCOVERED' with the number of rails (horizontal rows) being 3.
+
+![Table showing letters in an example of Rail Fence Cipher](../docs/assets/img/rail_fence.png)
+
+The cipher would read across each rail and append the text to get the ciphertext, 'WECRERDSOEEAIVD'.
 
 Spacing is optional in the ciphertext as it would not be related to the spacing in the plaintext and would not give away any information. However, the ciphertext is split into groups of 5 using spacing so that the ciphertext is more readable. 
 
-![Table showing letters in an exmaple of Rail Fence Cipher](../docs/assets/img/rail_fence.png)
+
 
 ##### Code
 ```
