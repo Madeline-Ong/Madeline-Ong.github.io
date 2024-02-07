@@ -1,3 +1,4 @@
+
 # Introduction 
 As I started this project my Learning Facilitator asked me, what is a cipher and I realised I did not even know how to describe it. So I started my research on what a cipher is.
 
@@ -12,6 +13,7 @@ An example of how important ciphers are, is when Alan Turing cracked the German'
 - [Types of Encryption Methods](#encrypt_mtd)
   - [Substitution Ciphers](#substitution)
     - [Monoalphabetic Ciphers](#monoalphabetic)
+      - []()
     - [Homophonic Ciphers](#homophonic)
     - [Polygraphic Ciphers](#polygraphic)
     - [Polyalphabetic Ciphers](#Polyalphabetic)
@@ -62,6 +64,8 @@ The earliest instances of this cipher are in the Hebrew Bible, the Book of Jerem
 
 The alphabet would be reversed, such that A becomes Z, etc.
 
+![Table showing letters in Atbash Cipher](../docs/assets/img/atbash.png)
+
 ##### Code
 ```
 import string
@@ -82,13 +86,14 @@ print(result)
 
 ```
 
-![Table showing letters in Atbash Cipher](../docs/assets/img/atbash.png)
 
 #### Affine Cipher
 Each letter is mapped to its numeric equivalent, multiplied by a constant, and then shifted by another constant.
 
-For example, if a is the result, x is the numeric equivalent of the letter, y is the multiplication constant and z is the rotation constant, the formula would be:
-a =  (yx + z) mod 26
+For example, if f(x) is the result, x is the numeric equivalent of the letter, a is the multiplication constant and b is the rotation constant, the formula would be:
+f(x) =  (ax + b) mod 26
+And y has to be a prime number so it can be reversed. 
+
 
 
 ### Geometric Cipher
@@ -137,13 +142,21 @@ Multiple ciphertext characters can be used to represent a single plaintext chara
 #### Polybios Square Cipher
 It is named after the ancient Greek historian Polybios. Since the Greek alphabet has 25 letters, the 5x5 square was used, where the alphabet was written in a grid format. When using English letters, I and J are typically combined and given 1 space. 
 
+
 <a name="polyalphabetic"></a>
 ### Polyalphabetic Ciphers
+As the name implies, more than 1 set of alphabet is used. In the 2 example below, they use the 2 sets of the English alphabet (Tabula recta) to encrypt the message. 
+
+![Tabula recta](../docs/assets/img/tabula_recta.png)
 
 #### Vigenère Cipher
+From the message, we encrypt character by character and the key is repeated to fit the length of the message. The top row is used to find the letter in the plaintext and from the key, we would find its corresponding letter along the left most column. Then to find letter in the ciphertext, we would trace till the 2 intersect. 
+
 
 
 #### Autokey Cipher
+It is a similar version to Vigenère Cipher but the plaintext is added onto the back of the key so instead of the key alone being repeated for the length of the plaintext, the key is now longer 
+
 
 
 <a name="transposition"></a>
@@ -160,6 +173,8 @@ The characters would start going downwards and diagonally across the rails and a
 The cipher would read: 
 
 Spacing is optional in the ciphertext as it would not be related to the spacing in the plaintext and would not give away any information. However, the ciphertext is split into groups of 5 using spacing so that the ciphertext is more readable. 
+
+![Table showing letters in an exmaple of Rail Fence Cipher](../docs/assets/img/rail_fence.png)
 
 ##### Code
 ```
@@ -200,7 +215,13 @@ print(ciphertext)
 
 <a name="scytale"></a>
 #### Scytale Cipher
-One of the oldest known examples is the Spartan scytale, where the Ancient Greeks would wrap a ribbon around a cylindrical rod of uniform circumference before writing a message on the ribbon horizontally. The key would set the number of characters in each row. 
+One of the oldest known examples is the Spartan scytale, where the Ancient Greeks would wrap a ribbon around a cylindrical rod of uniform circumference before writing a message on the ribbon horizontally. The key would set the number of characters in each (horizontal) row. The message would be the (vertical) columns appended together. 
+
+For example, if the plaintext is 'WE.ARE.DISCOVERED.FLEE.AT.ONCE.', the message would be written, while ignoring the seperator. 
+
+![Table showing letters in an exmaple of Scytale Cipher](../docs/assets/img/scytale.png)
+
+Then when the ciphertext is combined together, the seperator would be added back in the same position so that the recipent would be able to reconstruct the message. 
 
 
 <a name="columnar_transposition"></a>
