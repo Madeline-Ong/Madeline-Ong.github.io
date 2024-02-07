@@ -13,11 +13,10 @@ An example of how important ciphers are, is when Alan Turing cracked the German'
 - [Types of Encryption Methods](#encrypt_mtd)
   - [Substitution Ciphers](#substitution)
     - [Monoalphabetic Ciphers](#monoalphabetic)
-      - []()
+      
     - [Homophonic Ciphers](#homophonic)
     - [Polygraphic Ciphers](#polygraphic)
-    - [Polyalphabetic Ciphers](#Polyalphabetic)
-    - [ Ciphers](#)
+    - [Polyalphabetic Ciphers](#polyalphabetic)
   - [Transposition Ciphers](#transposition)
     - [Rail Fence Cipher](#rail_fence)
     - [Scytale Cipher](#scytale)
@@ -58,10 +57,6 @@ This cipher is named after the cipher Julius Caesar created. It is also known as
 #### Atbash Cipher
 The earliest instances of this cipher are in the Hebrew Bible, the Book of Jeremiah. The exact reason for the usage of the cipher is not known. It could have been to protect the prophet or the later scribe, as the prophet, Jeremiah, was given the task of publically announcing Cod's punishment on the nations, which included the Babylonian empire, in Jeremiah 25. “<sup>15</sup>This is what the LORD, the God of Israel, said to me: ‘Take from my hand this cup filled with the wine of my wrath and make all the nations to whom I send you drink it. . . . <sup>26</sup>And after all of them, the king of Sheshak will drink it too.'”
 
-(the nations shall drink the cup of God’s wrath)
-
-[…] and all the kings of the north, near and far, one after the other, and all the kingdoms of the world which are on the face of the earth, and the king of Sheshach shall drink after them.
-
 The alphabet would be reversed, such that A becomes Z, etc.
 
 ![Table showing letters in Atbash Cipher](../docs/assets/img/atbash.png)
@@ -100,13 +95,15 @@ And y has to be a prime number so it can be reversed.
 In this category, the letters are replaced with geometric symbols.
 
 #### Pigpen Cipher 
+Populated by Freemasons who used it so much that it is sometimes referred to as the Freemason's cipher. The Freemasons began using it in the early 18th century to keep their records of history and rites private, and for correspondence between lodge leaders.
 
 ![Pigpen Cipher](../docs/assets/img/pigpen.png)
 
 
 #### Rosicrucian Cipher 
+A variation of the Pigpen cipher that was used by the Rosicrucian Brotherhood. 
 
-
+![Rosicrucian  Cipher](../docs/assets/img/rosicrucian.png)
 
 #### Templar Cipher
 The Templar Cipher is said to have been used by the Knights Templar, a group of rich warrior monks, who needed a way to encrypt their notes so that if bandits robbed travellers, the note would be useless to the bandits. For the Knights Templar, the notes told them how much money the person had stored with them. 
@@ -129,7 +126,9 @@ In the example given, the letter 'A' would be substituted with 'L' and vice vers
 ### Homophonic Ciphers
 Multiple ciphertext characters can be used to represent a single plaintext character. This introduces ambiguity and makes frequency analysis more challenging.
 
+The example in the website below uses numbers to replace letters and for each % the frequency a letter would typically appear, one number is assigned to them. For example, if A has an 8% chance in appearing in English texts, it would be assigned 8 numbers. 
 
+https://www.simonsingh.net/The_Black_Chamber/homophonic_cipher.html
 
 <a name="polygraphic"></a>
 ### Polygraphic / Block Ciphers
@@ -142,6 +141,7 @@ Multiple ciphertext characters can be used to represent a single plaintext chara
 #### Polybios Square Cipher
 It is named after the ancient Greek historian Polybios. Since the Greek alphabet has 25 letters, the 5x5 square was used, where the alphabet was written in a grid format. When using English letters, I and J are typically combined and given 1 space. 
 
+![Polybios Square](../docs/assets/img/polybios.png)
 
 <a name="polyalphabetic"></a>
 ### Polyalphabetic Ciphers
@@ -150,13 +150,20 @@ As the name implies, more than 1 set of alphabet is used. In the 2 example below
 ![Tabula recta](../docs/assets/img/tabula_recta.png)
 
 #### Vigenère Cipher
-From the message, we encrypt character by character and the key is repeated to fit the length of the message. The top row is used to find the letter in the plaintext and from the key, we would find its corresponding letter along the left most column. Then to find letter in the ciphertext, we would trace till the 2 intersect. 
+We encrypt character by character of the plaintext and the key is repeated to fit the length of the plaintext. We would find the column for the plaintext letter in the top row and the row of the key letter along the left most column, we would trace till the row and column intersect. 
 
+For example if the plaintext is 'we are discovered' and the key is 'flee'. The key would be repeated to fit the length of the plaintext. We would find among the column headers for 'W' and the row header for 'F', which gives the letter 'B'. This process would be repeated for each character of the plaintext message and gives the ciphertext 'BP EVJ OMWHZZIWPH' if the punctuation is preserved. 
 
+![Example of using tabula recta for Vigenère Cipher](../docs/assets/img/vigenere_eg_table.png)
+
+![Example of Vigenère Cipher](../docs/assets/img/vigenere_eg.png)
 
 #### Autokey Cipher
-It is a similar version to Vigenère Cipher but the plaintext is added onto the back of the key so instead of the key alone being repeated for the length of the plaintext, the key is now longer 
+It is a similar version to Vigenère Cipher but the plaintext is added onto the back of the key so instead of the key alone being repeated for the length of the plaintext, the key is now longer. 
 
+For example if the plaintext is 'we are discovered' and the key is 'flee'. The plaintext would be added onto the key, becoming a key stream of 'fl eew earediscov'. The rest of the process is the same as Vigenère Cipher, and gives the ciphertext 'BP EVA HIJGRDWTSY' if the punctuation is preserved. 
+
+![Example of Autokey Cipher](../docs/assets/img/autokey.png)
 
 
 <a name="transposition"></a>
