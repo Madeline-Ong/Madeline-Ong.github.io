@@ -287,12 +287,17 @@ One would identify the most often occurring letters in the ciphertext and theori
 Identifying patterns in ciphertext can provide insights into the underlying structure of a substitution or transposition cipher. After a letter is discovered, the text can then be checked for possible letters after it. For example for the letter 't', 'h' is often the letter after it. 
 
 
-## Mathematical Operations that are difficult to reverse 
-No matrix division
+## Mathematical Operations that are difficult or impossible to reverse 
+An example of a function that cannot be reversed is matrix multiplication since there is no matrix division. 
 
 
 # How to make cipher harder to crack
 ## Trapdoor functions
 They refer to operations that are easy to calculate in one direction but difficult to reverse without special knowledge. 
 
+One example is modulus (%), which gets the remainder from a division. It would be difficult to reverse this equation as without knowing the divisor and quotient, it is impossible to guess what the original number is. 
+
 ## Introducing more characters or mapping multiple characters to a plaintext character
+This would reduce the effectiveness of frequency analysis. 
+
+Such as what is done in homophonic ciphers, 
