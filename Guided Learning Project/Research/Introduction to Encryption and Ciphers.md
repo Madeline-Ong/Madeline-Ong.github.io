@@ -295,9 +295,9 @@ An example of a function that cannot be reversed is matrix multiplication since 
 ## Trapdoor functions
 They refer to operations that are easy to calculate in one direction but difficult to reverse without special knowledge. 
 
-One example is modulus (%), which gets the remainder from a division. It would be difficult to reverse this equation as without knowing the divisor and quotient, it is impossible to guess what the original number is. 
+One example is modulus (%), which gets the remainder from a division. It would be difficult to reverse the modulus equation as without knowing the divisor and quotient, it is impossible to guess what the original number is. 
 
 ## Introducing more characters or mapping multiple characters to a plaintext character
-This would reduce the effectiveness of frequency analysis. 
+This would reduce the effectiveness of frequency analysis, which analyses the frequency of letters occurring in any English text to give hints as to the identity of the plaintext letter. 
 
-Such as what is done in homophonic ciphers, 
+Such as what is done in homophonic ciphers, since for each percentage a character will 
