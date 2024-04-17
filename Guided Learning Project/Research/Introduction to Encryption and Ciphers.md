@@ -20,9 +20,10 @@ An example of how important ciphers are, is when Alan Turing cracked the German'
   - [Symmetric Key Encryption](#symmetric)
   - [Asymmetric Key Encryption](#asymmetric)
   - [Hashing](#hashing)
-    - [Salting](#salting)
-    - [MD5](#md5)
     - [SHA](#sha)
+    - [MD5](#md5)
+    - [Salting](#salting)
+    
 - [Cipher Cracking](#cipher_cracking)
   - [Frequency Analysis](#freq_analysis)
   - [Pattern Recognition](#pattern_recog)
@@ -42,8 +43,12 @@ The ciphers under this category of "substitution" replace each letter, in a way 
 ### Monoalphabetic Ciphers
 Generally, a simple one-to-one mapping of letters is used. For example, each 'A' in the plaintext is replaced by the same letter in the ciphertext.
 
-
 Examples include: 
+#### Simple Substitution Cipher
+As stated above, it replaces one letter with another. For example, the plaintext letter 'A' would be replaced with the letter 'L', 'B' with 'P', 'C' with 'J' etc.
+
+![Table showing letters in an exmaple of Simple Substitution Cipher](../docs/assets/img/sub_cipher.png)
+
 #### Caesar Cipher: 
 This cipher is named after the cipher Julius Caesar created. It is also known as Shift or Rotation Cipher as each letter in the plaintext is shifted or rotated forward by a fixed number of positions (also called the key) down the alphabet. For example, if the key is 3, 'A' in the plaintext would be 'D' in the ciphertext. 
 
@@ -90,7 +95,7 @@ And y has to be a prime number so it can be reversed.
 In this category, the letters are replaced with geometric symbols.
 
 #### Pigpen Cipher 
-Populated by Freemasons who used it so much that it is sometimes referred to as the Freemason's cipher. The Freemasons began using it in the early 18th century to keep their records of history and rites private, and for correspondence between lodge leaders.
+It is populated by the Freemasons, who used it so much that it is sometimes referred to as the Freemason's cipher. The Freemasons began using it in the early 18th century to keep their records of history and rites private, and for correspondence between lodge leaders.
 
 ![Pigpen Cipher](../docs/assets/img/pigpen.png)
 
@@ -114,14 +119,14 @@ The 26 letters are paired into 13 pairs, and substitution is done using those pa
 
 ![Table showing letters in an exmaple of Vatsyayana Cipher](../docs/assets/img/vatsyayana.png)
 
-In the example given, the letter 'A' would be substituted with 'L' and vice versa, 'B' with the letter 'P', etc.
+From the example above, the letter 'A' would be substituted with 'L' and vice versa, 'B' with the letter 'P', etc.
 
 
 <a name="homophonic"></a>
 ### Homophonic Ciphers
 Multiple ciphertext characters can be used to represent a single plaintext character. This introduces ambiguity and makes frequency analysis more challenging.
 
-The example in the website below uses numbers to replace letters and for each % the frequency a letter would typically appear, one number is assigned to them. For example, if A has an 8% chance in appearing in English texts, it would be assigned 8 numbers. 
+The example in the website below uses numbers to replace letters and for each % the frequency a letter would typically appear, one number is assigned to them. For example, if A has an 8% chance of appearing in English texts, it would be assigned 8 numbers. 
 
 https://www.simonsingh.net/The_Black_Chamber/homophonic_cipher.html
 
@@ -140,14 +145,14 @@ It is named after the ancient Greek historian Polybios. Since the Greek alphabet
 
 <a name="polyalphabetic"></a>
 ### Polyalphabetic Ciphers
-As the name implies, more than 1 set of alphabet is used. In the 2 example below, they use the 2 sets of the English alphabet (Tabula recta) to encrypt the message. 
+As the name implies, more than 1 set of the alphabet is used. In the 2 examples below, they use the 2 sets of the English alphabet (Tabula recta) to encrypt the message. 
 
 ![Tabula recta](../docs/assets/img/tabula_recta.png)
 
 #### Vigenère Cipher
-We encrypt character by character of the plaintext and the key is repeated to fit the length of the plaintext. We would find the column for the plaintext letter in the top row and the row of the key letter along the left most column, we would trace till the row and column intersect. 
+We encrypt character by character of the plaintext and the key is repeated to fit the length of the plaintext. We would find the column for the plaintext letter in the top row and the row of the key letter along the leftmost column, we would trace till the row and column intersect. 
 
-For example if the plaintext is 'we are discovered' and the key is 'flee'. The key would be repeated to fit the length of the plaintext. We would find among the column headers for 'W' and the row header for 'F', which gives the letter 'B'. This process would be repeated for each character of the plaintext message and gives the ciphertext 'BP EVJ OMWHZZIWPH' if the punctuation is preserved. 
+For example, if the plaintext is 'we are discovered' and the key is 'flee'. The key would be repeated to fit the length of the plaintext. We would find among the column headers for 'W' and the row header for 'F', which gives the letter 'B'. This process would be repeated for each character of the plaintext message and gives the ciphertext 'BP EVJ OMWHZZIWPH' if the punctuation is preserved. 
 
 ![Example of using tabula recta for Vigenère Cipher](../docs/assets/img/vigenere_eg_table.png)
 
@@ -223,11 +228,11 @@ print(ciphertext)
 #### Scytale Cipher
 One of the oldest known examples is the Spartan scytale, where the Ancient Greeks would wrap a ribbon around a cylindrical rod of uniform circumference before writing a message on the ribbon horizontally. The key would set the number of characters in each (horizontal) row. The message would be the (vertical) columns appended together. 
 
-For example, if the plaintext is 'WE.ARE.DISCOVERED.FLEE.AT.ONCE.', the message would be written, while ignoring the seperator. 
+For example, if the plaintext is 'WE.ARE.DISCOVERED.FLEE.AT.ONCE.', the message would be written, while ignoring the separator. 
 
 ![Table showing letters in an example of Scytale Cipher](../docs/assets/img/scytale.png)
 
-Then when the ciphertext is combined together, the seperator would be added back in the same position so that the recipent would be able to reconstruct the message. 
+Then when the ciphertext is combined together, the separator would be added back in the same position so that the recipient would be able to reconstruct the message. 
 
 
 <a name="columnar_transposition"></a>
@@ -255,7 +260,8 @@ A single key is used to encrypt and decrypt. Symmetric keys are usually 128 or 2
 
 <a name="asymmetric"></a>
 ## Asymmetric Key Encryption
-Use of public-private key pairing such that data that has been encrypted with the public key can only be decrypted using the private key. The sender and recipient would have their own unique public-private key pair. As the name of the keys implies, the public key is shared openly, while the private key is kept confidential.
+It uses a public-private key pairing such that data that has been encrypted with the public key can only be decrypted using the private key. The sender and recipient would have their own unique public-private key pair. As the name of the keys implies, the public key is shared openly, while the private key is kept confidential.
+
 
 <a name="rsa"></a>
 ### Rivest–Shamir–Adleman (RSA)
@@ -265,7 +271,32 @@ Use of public-private key pairing such that data that has been encrypted with th
 
 <a name="hashing"></a>
 ## Hashing
-Meant to be a one-way encryption to secure data. 
+It is a one-way encryption to secure data. It is one way as the data is encrypted using a formula, of which the results lose a lot of data, that would be needed to be able to reverse the hashing. 
+Hashing is used to secure data that does not need to be retrieved, such as passwords. A password is hashed and then saved in the database. This is done so that if the database is leaked or compromised, the attacker cannot use the retrieved hash to log in. 
+
+### Examples of hashes:
+
+<a name="sha"></a>
+#### Secure Hash Algorithm (SHA)
+SHA256 is currently the industrial standard. It is a hashing algorithm that encrypts text of any length into a fixed-size string of 256 bits (32 bytes) and is a part of the SHA 2 algorithm family. 
+In comparison to SHA512, it requires less bandwidth to store and transmit, takes up less memory space and in many cases, uses less processing power to compute. 
+
+However, SHA512 has greater collision resistance, which may need to be considered in the future, when a quantum computer would be able to crack hashes.
+
+Since SHA-256 produces a 256-bit hash, while SHA-512 produces a 512-bit hash, the longer hash length of SHA-512 provides a larger output, making it more resistant to certain types of cryptographic attacks, such as brute-force and collision attacks.
+
+Additionally, different hardware favours different functions. SHA512 is generally faster on 64-bit processors and SHA256 is faster on 32-bit processors.
+
+<a name="md5"></a>
+#### MD5
+The MD5 message-digest algorithm is one of the most commonly known hashes as it is widely used. However, it is not up to industrial standards since it is not as secure as SHA256 since hash collision is possible. MD5 is a hashing algorithm that produces a 128-bit hash value.
+
+MD5 is still used as it would be difficult for those who have used it for years, to make changes to the entire database. Also, even though MD5 hashes may have collisions, it takes a lot of time and effort to get a collision, and it is better to have hashed data rather than data that is stored in plaintext. 
+
+<a name="hash_collision"></a>
+### Hash collision 
+This occurs when hashing 2 texts gives the same result. However, this is very hard to do as changing just 1 character from the plaintext would change the hash. One would need a lot of trial and error to see how each change affects the hash. 
+
 
 <a name="salting"></a>
 ### Salting
