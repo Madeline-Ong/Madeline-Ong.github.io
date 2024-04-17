@@ -12,7 +12,7 @@ These are the Excel functions taught and used in O Levels Computing
 <a name="logical"></a>
 ## Logical Functions
 | Function | Meaning |
-| -------- | -------- |
+| - | - |
 | < | Less than |
 | <= | Less than or equal to |
 | > | Greater than |
