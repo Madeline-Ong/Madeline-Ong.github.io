@@ -183,7 +183,7 @@ An example is using the plaintext 'WEAREDISCOVERED' with the number of rails (ho
 
 The cipher would read across each rail and append the text to get the ciphertext, 'WECRERDSOEEAIVD'.
 
-Spacing is optional in the ciphertext as it would not be related to the spacing in the plaintext and would not give away any information. However, the ciphertext is split into groups of 5 using spacing so that the ciphertext is more readable. 
+Spacing is optional in the ciphertext as it would not be related to the spacing in the plaintext and would not give away any information. The ciphertext can be split into groups of 5 using spacings, so that the ciphertext is more readable. 
 
 
 
@@ -201,10 +201,15 @@ ciphertext = [''] * rails
 
 down = True
 row = 0
-for char in range(len(plaintext)):
-    ciphertext[row] += plaintext[char]
+for index in range(len(plaintext)):
+    # Ignores spacing in plaintext
+    if plaintext[index].isspace():
+        continue
+    else: 
+        ciphertext[row] += plaintext[index]
+
     if row < (rails-1) and down == True:
-        row += 1
+      row += 1
     elif row > 0 and down == False:
         row -= 1
 
@@ -212,7 +217,6 @@ for char in range(len(plaintext)):
         down = not down
 
 ciphertext = ''.join(ciphertext)
-#print(ciphertext)
 
 ### Optional (for the spacing) ###
 for index in range(0, len(ciphertext)):
