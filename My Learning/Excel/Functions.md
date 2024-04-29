@@ -37,7 +37,9 @@ Do note that the params in **bold** are compulsory for the functions below. If n
 | Function | Syntax | Description | Fun Fact |
 | - | - | - | - |
 | LEN | =LEN(text) | Returns the number of characters in _text_. | 
-| LEN | =LEN(text) | Returns the number of characters in _text_. | 
+| MID | =MID(text, start_num, num_of_char) | Returns _num_of_char_ characters starting from position _start_num_ of _text_. | 
+| LEFT | =LEFT(**text**, num_of_char) | Returns _num_of_char_ characters from the beginning of _text_. | If _num_of_char_ is not stated, the function only returns the first character of _text_.
+| RIGHT | =RIGHT(**text**, num_of_char) | Returns _num_of_char_ characters starting from position _start_num_ of _text_. | 
 
 
 <a name="lookup"></a>
