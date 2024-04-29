@@ -14,44 +14,70 @@ Do note that the params in **bold** are compulsory for the functions below. If n
 ## Logical Functions
 
 <table>
-	<tr>
-		<th>Operators</th>
-		<th>Meaning</th>
-	</tr>
-	<tr>
-		<td>&lt;</td>
-		<td>Less than</td>
-	</tr>
-	<tr>
-		<td>&lt;=</td>
-		<td>Less than or equal to</td>
-	</tr>
-	<tr>
-		<td>&gt;</td>
-		<td>Greater than</td>
-	</tr>
-	<tr>
-		<td>&gt;=</td>
-		<td>Greater than or equal to</td>
-	</tr>
-	<tr>
-		<td>=</td>
-		<td>Equal to</td>
-	</tr>
-	<tr>
-		<td>&lt;&gt;</td>
-		<td>Not equal to</td>
-	</tr>
+  <tr>
+    <th>Operator</th>
+    <th>Meaning</th>
+  </tr>
+  <tr>
+    <td>&lt;</td>
+    <td>Less than</td>
+  </tr>
+  <tr>
+    <td>&lt;=</td>
+    <td>Less than or equal to</td>
+  </tr>
+  <tr>
+    <td>&gt;</td>
+    <td>Greater than</td>
+  </tr>
+  <tr>
+    <td>&gt;=</td>
+    <td>Greater than or equal to</td>
+  </tr>
+  <tr>
+    <td>=</td>
+    <td>Equal to</td>
+  </tr>
+  <tr>
+    <td>&lt;&gt;</td>
+    <td>Not equal to</td>
+  </tr>
 </table>
 <br>
 
 
-| Function | Syntax | Description | Fun Fact |
-| - | - | - | - |
-| IF | =IF(condition, value_if_true, value_if_false) | Returns _value_if_true_ when _condition_ is TRUE and _value_if_false_ when _condition_ is FALSE. | If =IF(condition, value_if_true), then if _condition_ is FALSE, returns FALSE. If =IF(condition,, value_if_false), then if _condition_ is TRUE, returns 0. |
-| AND | =AND(**bool1**, bool2, ...) | Returns TRUE when all of the conditions in the cells are TRUE. Otherwise, returns FALSE. |
-| OR | =OR(**bool1**, bool2, ...) | Returns TRUE when any of the conditions in the cells are TRUE. Otherwise, returns FALSE. |
-| NOT | =NOT(bool) | Returns TRUE when _bool_ is FALSE, and FALSE when _bool_ is TRUE. |
+<table>
+  <tr>
+    <th>Function</th>
+    <th>Syntax</th>
+    <th>Description</th>
+    <th>More Info</th>
+  </tr>
+  <tr>
+    <td>IF</td>
+    <td>=IF(condition, value_if_true, value_if_false)</td>
+    <td>Returns _value_if_true_ when _condition_ is TRUE and _value_if_false_ when _condition_ is FALSE.</td>
+    <td>If =IF(condition, value_if_true), then if _condition_ is FALSE, returns FALSE. If =IF(condition,, value_if_false), then if _condition_ is TRUE, returns 0.</td>
+  </tr>
+  <tr>
+    <td>AND</td>
+    <td>=AND(**bool1**, bool2, ...)</td>
+    <td>Returns TRUE when all of the conditions in the cells are TRUE. Otherwise, returns FALSE.</td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>OR</td>
+    <td>=OR(**bool1**, bool2, ...)</td>
+    <td>Returns TRUE when any of the conditions in the cells are TRUE. Otherwise, returns FALSE.</td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>NOT</td>
+    <td>=NOT(bool)</td>
+    <td>Returns TRUE when _bool_ is FALSE, and FALSE when _bool_ is TRUE.</td>
+    <td></td>
+  </tr>
+</table>
 <br>
 
 <a name="text"></a>
