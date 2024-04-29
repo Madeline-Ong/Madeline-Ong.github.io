@@ -13,14 +13,36 @@ Do note that the params in **bold** are compulsory for the functions below. If n
 <a name="logical"></a>
 ## Logical Functions
 
-| Operators | Meaning |
-| - | - |
-| < | Less than |
-| <= | Less than or equal to |
-| > | Greater than |
-| >= | Greater than or equal to |
-| = | Equal to |
-| <> | Not equal to |
+<table>
+	<tr>
+		<th>Operators</th>
+		<th>Meaning</th>
+	</tr>
+	<tr>
+		<td>&lt;</td>
+		<td>Less than</td>
+	</tr>
+	<tr>
+		<td>&lt;=</td>
+		<td>Less than or equal to</td>
+	</tr>
+	<tr>
+		<td>&gt;</td>
+		<td>Greater than</td>
+	</tr>
+	<tr>
+		<td>&gt;=</td>
+		<td>Greater than or equal to</td>
+	</tr>
+	<tr>
+		<td>=</td>
+		<td>Equal to</td>
+	</tr>
+	<tr>
+		<td>&lt;&gt;</td>
+		<td>Not equal to</td>
+	</tr>
+</table>
 <br>
 
 
