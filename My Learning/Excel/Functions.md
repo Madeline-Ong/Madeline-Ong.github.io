@@ -1,14 +1,14 @@
 # Intro
 These are the Excel functions taught and used in O Levels Computing
 
+Do note that the params in **bold** are compulsory for the functions below. If none are bolded, all params are needed for it to work as expected.
+
 # Contents
 - [Logical Functions](#logical)
 - [Text Functions](#text)
 - [Lookup Functions](#lookup)
 - [Math Functions](#math)
 - [Logical Functions](#logical)
-
-Do note that the params in **bold** are compulsory for the functions below. If none are bolded, all params are needed for it to work as expected.
 
 <a name="logical"></a>
 ## Logical Functions
@@ -117,6 +117,16 @@ Do note that the params in **bold** are compulsory for the functions below. If n
 
 <a name="lookup"></a>
 ## Lookup Functions
+
+For both functions stated below, there is a parameter: <i>range_lookup</i>, which is optional and takes the values TRUE or FALSE.
+If <i>range_lookup</i> is TRUE, the function does an approximate match.
+If <i>range_lookup</i> is FALSE, the function does an exact match.
+If <i>range_lookup</i> is not stated, the function does an approximate match.
+
+An approximate match is when the function finds what value in the table the <i>lookup_value</i> is "greater" than.
+If there are values 1, 5, 9, etc in the first row/column, with a lookup value of 8, the function would look in the 2nd column/row. 8 is closer to 9 numerically, but is less than 9 and greater than 5, so it would search in the 2nd column/row (first value 5).
+If there is a value AB in the first row/column, with a lookup value of "A", the function would not look into that column/row. But with a lookup value of "abc", the function would return the value in that column/row of the stated row/column.
+
 <table>
   <tr>
     <th>Function</th>
@@ -125,31 +135,68 @@ Do note that the params in **bold** are compulsory for the functions below. If n
     <th>More Info</th>
   </tr>
   <tr>
-    <td>VLOOKUP</td>
-    <td>=VLOOKUP(<b>lookup_value</b>, <b>table_range</b>, <b>col_index_num</b>, range_lookup)</td>
-    <td>It looks for <i>lookup_value</i> in the first column of <i>table_range</i> and returns the value from column <i>col_index_num</i> in the row of <i>lookup_value</i>.<br><br>If <i>range_lookup</i> is TRUE, the function does an approximate match.<br><br> If <i>range_lookup</i> is FALSE, the function does an exact match.<br><br> If <i>range_lookup</i> is not stated, the function does an approximate match.</td>
-    <td>Approximate match is what is "greater" than the value in the table.<br><br> If there are values 1, 5, 9, etc, with a lookup value of 9, the function would look in the 2nd row. 8 is closer to 9 numerically, but is less than 9 so it would search in the 2nd row (first value 5).<br><br> If there is a value AB in the first column, a lookup value of "A", would not search in that row. But a lookup value of "abc" would return the value in that row of the stated column.</td>
-  </tr>
-  <tr>
     <td>HLOOKUP</td>
     <td>=HLOOKUP(<b>lookup_value</b>, <b>table_range</b>, <b>row_index_num</b>, range_lookup)</td>
-    <td>Less</td>
-    <td>Less</td>
+    <td>It looks for <i>lookup_value</i> in the first row of <i>table_range</i> and returns the value from row <i>row_index_num</i> in the column of <i>lookup_value</i>.</td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>VLOOKUP</td>
+    <td>=VLOOKUP(<b>lookup_value</b>, <b>table_range</b>, <b>col_index_num</b>, range_lookup)</td>
+    <td>It looks for <i>lookup_value</i> in the first column of <i>table_range</i> and returns the value from column <i>col_index_num</i> in the row of <i>lookup_value</i>.<br><br>
+    <td></td>
   </tr>
 </table>
 
+
+<a name="math"></a>
+## Math Functions
+<table>
+  <tr>
+    <th>Function</th>
+    <th>Syntax</th>
+    <th>Description</th>
+    <th>More Info</th>
+  </tr>
+  <tr>
+    <td>CEILING</td>
+    <td>=CEILING(number, significance)</td>
+    <td>Returns <i>number</i> rounded <strong>up</strong> to a multiple of <i>significance</i>.<br><br>
+    Eg: =CEILING(10.123, 0.03) returns 10.14, which is a multiple of 0.03. 
+    </td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>FLOOR</td>
+    <td>=FLOOR(number, significance)</td>
+    <td>Returns <i>number</i> rounded <strong>down</strong> to a multiple of <i>significance</i>.<br><br>
+    Eg: =CEILING(10.123, 0.03) returns 10.11, which is a multiple of 0.03. 
+    <td></td>
+  </tr>
+  <tr>
+    <td>POWER</td>
+    <td>=POWER(number, power)</td>
+    <td>Returns <i>number</i> raised to the exponent <i>power</i>.</td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>SQRT</td>
+    <td>=SQRT(number)</td>
+    <td>Returns the square root of <i>number</i></td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>ROUND</td>
+    <td>=ROUND(number, num_of_digits)</td>
+    <td>Returns <i>number</i> rounded to <i>num_of_digits</i> decimal place(s).</td>
+    Eg: =ROUND(10.123, 0) returns 10. =ROUND(10.123, 2) returns 10.12.
+  </tr>
 SUM 
 SUMIF
 ROUND
 RAND
 RANDBETWEEN
 
-<a name="math"></a>
-## Math Functions
-CEILING
-FLOOR
-POWER
-SQRT
 
 <a name="history"></a>
 ## 
