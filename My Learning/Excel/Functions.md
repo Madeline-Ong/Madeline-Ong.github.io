@@ -188,9 +188,40 @@ If there is a value AB in the first row/column, with a lookup value of "A", the 
   <tr>
     <td>ROUND</td>
     <td>=ROUND(number, num_of_digits)</td>
-    <td>Returns <i>number</i> rounded to <i>num_of_digits</i> decimal place(s).</td>
-    Eg: =ROUND(10.123, 0) returns 10. =ROUND(10.123, 2) returns 10.12.
+    <td>Returns <i>number</i> rounded to <i>num_of_digits</i> decimal place(s).<br><br>
+    Eg: =ROUND(10.123, 0) returns 10.<br><br> =ROUND(10.123, 2) returns 10.12.</td>
   </tr>
+  <tr>
+    <td>RAND</td>
+    <td>=RAND()</td>
+    <td>Returns a random number greater than or equal to 0 and less than 1.</td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>RANDBETWEEN</td>
+    <td>=RANDBETWEEN(lowest, highest)</td>
+    <td>Returns a random number between the whole numbers <i>lowest</i> and <i>highest</i> (inclusive of both).</td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>SUM</td>
+    <td>=SUM(<b>num1</b>, num2, ...)</td>
+    <td>Returns the total of the stated numbers or numbers in the cell range.</td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>SUMIF</td>
+    <td>=SUMIF(<b>range</b>, <b>criteria</b>, sum_range)</td>
+    <td>Returns the sum of the numbers in <i>sum_range</i> where the corresponding value in <i>range</i> satisfies the condition in <i>criteria</i>.</td>
+    <td>If <i>sum_range</i> is not stated, then <i>range</i> is used as <i>sum_range</i>.</td>
+  </tr>
+  <tr>
+    <td>MOD</td>
+    <td>=MOD(number, divisor)</td>
+    <td>Returns the remainder when <i>number</i> is divided by <i>divisor</i>.</td>
+    <td></td>
+  </tr>
+</table>
 SUM 
 SUMIF
 ROUND
