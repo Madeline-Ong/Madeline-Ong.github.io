@@ -3,6 +3,7 @@ These are the Excel functions taught and used in O Levels Computing
 
 # Contents
 - [Logical Functions](#logical)
+- [Text Functions](#text)
 - [Lookup Functions](#lookup)
 - [Math Functions](#math)
 - [Logical Functions](#logical)
@@ -26,10 +27,18 @@ Do note that the params in **bold** are compulsory for the functions below. If n
 | Function | Syntax | Description | Fun Fact |
 | - | - | - | - |
 | IF | =IF(condition, value_if_true, value_if_false) | Returns _value_if_true_ when _condition_ is TRUE and _value_if_false_ when _condition_ is FALSE. | If =IF(condition, value_if_true), then if _condition_ is FALSE, returns FALSE. If =IF(condition,, value_if_false), then if _condition_ is TRUE, returns 0. |
-| AND | =AND(**bool1**, bool2, ...) | Returns TRUE when all of the given boolean values or values in the given range/cell references are TRUE; otherwise, returns FALSE |
-| OR | - | - |
-| NOT | - | - |
+| AND | =AND(**bool1**, bool2, ...) | Returns TRUE when all of the conditions in the cells are TRUE. Otherwise, returns FALSE. |
+| OR | =OR(**bool1**, bool2, ...) | Returns TRUE when any of the conditions in the cells are TRUE. Otherwise, returns FALSE. |
+| NOT | =NOT(bool) | Returns TRUE when _bool_ is FALSE, and FALSE when _bool_ is TRUE. |
 <br>
+
+<a name="text"></a>
+## Text Functions
+| Function | Syntax | Description | Fun Fact |
+| - | - | - | - |
+| LEN | =LEN(text) | Returns the number of characters in _text_. | 
+| LEN | =LEN(text) | Returns the number of characters in _text_. | 
+
 
 <a name="lookup"></a>
 ## Lookup Functions
