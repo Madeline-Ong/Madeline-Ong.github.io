@@ -116,7 +116,8 @@ Do note that the params in **bold** are compulsory for the functions below. If n
 </table>
 
 <a name="lookup"></a>
-## Lookup Functions<table>
+## Lookup Functions
+<table>
   <tr>
     <th>Function</th>
     <th>Syntax</th>
@@ -126,8 +127,8 @@ Do note that the params in **bold** are compulsory for the functions below. If n
   <tr>
     <td>VLOOKUP</td>
     <td>=VLOOKUP(<b>lookup_value</b>, <b>table_range</b>, <b>col_index_num</b>, range_lookup)</td>
-    <td>It looks for <i>lookup_value</i> in the first column of <i>table_range</i> and returns the value from column <i>col_index_num</i> in the row of _lookup_value_.</td>
-    <td></td>
+    <td>It looks for <i>lookup_value</i> in the first column of <i>table_range</i> and returns the value from column <i>col_index_num</i> in the row of <i>lookup_value</i>.<br><br>If <i>range_lookup</i> is TRUE, the function does an approximate match.<br><br> If <i>range_lookup</i> is not stated, the function does an exact match.<br><br> If <i>range_lookup</i> is not stated, the function does an approximate match.</td>
+    <td>Approximate match is what is "greater" than the value in the table. Eg if there are values 1, 5, 9, etc, lookup value of 9 would find in the 2nd row. 8 is closer to 9 numerically, but is less than 9 so it would search in the 2nd row (first value 5). If there is a value AB in the first column, a lookup value of "A", would not search in that row. But a lookup value of "abc" would return the value in that row of the stated column.</td>
   </tr>
   <tr>
     <td>HLOOKUP</td>
