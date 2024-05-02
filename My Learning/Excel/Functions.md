@@ -8,7 +8,9 @@ Do note that the params in **bold** are compulsory for the functions below. If n
 - [Text Functions](#text)
 - [Lookup Functions](#lookup)
 - [Math Functions](#math)
-- [Logical Functions](#logical)
+- [Statistical Functions](#stat)
+- [Financial Functions](#financial)
+- [Miscellaneous Functions](#misc)
 
 <a name="logical"></a>
 ## Logical Functions
@@ -190,6 +192,7 @@ If there is a value AB in the first row/column, with a lookup value of "A", the 
     <td>=ROUND(number, num_of_digits)</td>
     <td>Returns <i>number</i> rounded to <i>num_of_digits</i> decimal place(s).<br><br>
     Eg: =ROUND(10.123, 0) returns 10.<br><br> =ROUND(10.123, 2) returns 10.12.</td>
+    <td></td>
   </tr>
   <tr>
     <td>RAND</td>
@@ -222,27 +225,124 @@ If there is a value AB in the first row/column, with a lookup value of "A", the 
     <td></td>
   </tr>
 </table>
-SUM 
-SUMIF
-ROUND
-RAND
-RANDBETWEEN
 
 
-<a name="history"></a>
-## 
-COUNT
-COUNTIF
-COUNTA
-COUNTBLANK
+<a name="stat"></a>
+## Statistical Functions
+<table>
+  <tr>
+    <th>Function</th>
+    <th>Syntax</th>
+    <th>Description</th>
+    <th>More Info</th>
+  </tr>
+  <tr>
+    <td>MAX</td>
+    <td>=MAX(<b>num1</b>, num2, ...)</td>
+    <td>Returns the largest number out of the stated numbers or the numbers in the cell range.</td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>MIN</td>
+    <td>=MIN(<b>num1</b>, num2, ...)</td>
+    <td>Returns the smallest number out of the stated numbers or the numbers in the cell range.</td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>SMALL</td>
+    <td>=SMALL(range, k)</td>
+    <td>Returns the <i>k</i>th smallest number in <i>range</i>.</td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>LARGE</td>
+    <td>=LARGE(range, k)</td>
+    <td>Returns the <i>k</i>th largest number in <i>range</i>.</td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>MODE.SNGL</td>
+    <td>=MODE.SNGL(<b>num1</b>, num2, ...)</td>
+    <td>Returns the most frequently occurring value of the stated numbers or the numbers in cell range.</td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>MEDIAN</td>
+    <td>=MEDIAN(<b>num1</b>, num2, ...)</td>
+    <td>Returns the middle number of the stated numbers or the numbers in cell range.</td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>AVERAGE</td>
+    <td>=AVERAGE(<b>num1</b>, num2, ...)</td>
+    <td>Returns the mean of the stated numbers or the numbers in cell range.</td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>PERCENTILE</td>
+    <td>=PERCENTILE(range, k)<br><br>
+    Note that <i>k</i> should be between 0 and 1 (inclusive).</td>
+    <td>Returns the (k × 100)th percentile of the numbers in range.
+    Eg: =PERCENTILE(A1:A10, 0.2) returns the 20th percentile of A1:A10.</td>
+    <td>If k is 0, then this function is equivalent to MIN().
+If k is 0.5, then this function is equivalent to MEDIAN().
+If k is 1, then this function is equivalent to MAX().</td>
+  </tr>
+  <tr>
+    <td>QUARTILE</td>
+    <td>=QUARTILE(range, quart)</td>
+    <td>Returns a specified quartile of the numbers in <i>range</i>.</td>
+    <td>
+    If <i>quart</i> is 0, then the function returns the smallest number of <i>range</i> (same as MIN()).<br><br>
+    If <i>quart</i> is 1, then the function returns the first quartile (25th percentile).<br><br>
+    If <i>quart</i> is 2, then the function returns the middle number of <i>range</i> (same as MEDIAN().<br><br>
+    If <i>quart</i> is 3, then the function returns the third quartile (75th percentile).<br><br>
+    If <i>quart</i> is 4, then the function returns the largest number of <i>range</i> (same as MAX()).<br><br>
+  </tr>
+  <tr>
+    <td>STDEV</td>
+    <td>=STDEV(<b>num1</b>, num2, ...)</td>
+    <td>Returns the standard deviation of the stated numbers or the numbers in cell range.</td>
+    <td>Standard deviation is sqrt of variance <br><br>
+    Formula: 
+    </td>
+  </tr>
+  <tr>
+    <td>VAR</td>
+    <td>=VAR(<b>num1</b>, num2, ...)</td>
+    <td>Returns the variance of the stated numbers or the numbers in cell range.</td>
+    <td>Variance is the sq of standard deviation <br><br>
+    Formula: 
+    </td>
+  </tr>
+  <tr>
+    <td>COUNT</td>
+    <td>=COUNT(<b>range1</b>, range2, ...)</td>
+    <td>Returns the number of cells that contains numbers, currencies, dates, times and percentages in the stated range reference(s).</td>
+    <td>Empty cells and cells with text or bool values not counted.</td>
+  </tr>
+  <tr>
+    <td>COUNTA</td>
+    <td>=COUNTA(<b>range1</b>, range2, ...)</td>
+    <td>Returns the number of non-empty cells in the stated cell reference(s). </td>
+    <td>Empty cells are not counted, the function counts cells with any content.</td>
+  </tr>
+  <tr>
+    <td>COUNTBLANK</td>
+    <td>=COUNTBLANK(range)</td>
+    <td>Returns the number of empty cells in <i>range</i>.</td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>COUNTIF</td>
+    <td>=COUNTIF(range, condition)</td>
+    <td>Returns the number of cells in <i>range</i> that satisfies <i>condition</i>.</td>
+    <td></td>
+  </tr>
+</table>
 
-MIN
-MAX
-SMALL
-LARGE
-
-<a name="history"></a>
-## Functions
+<a name="financial"></a>
+## Financial Functions
 PV
 FV
 RATE
@@ -256,3 +356,5 @@ PPMT
 | - | - | - |
 | TODAY | =TODAY() | Returns today's date. |
 
+<a name="math"></a>
+## Math Functions
