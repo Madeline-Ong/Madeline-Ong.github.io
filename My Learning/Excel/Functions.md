@@ -214,8 +214,8 @@ If there is a value AB in the first row/column, with a lookup value of "A", the 
   </tr>
   <tr>
     <td>SUMIF</td>
-    <td>=SUMIF(<b>range</b>, <b>criteria</b>, sum_range)</td>
-    <td>Returns the sum of the numbers in <i>sum_range</i> where the corresponding value in <i>range</i> satisfies the condition in <i>criteria</i>.</td>
+    <td>=SUMIF(<b>range</b>, <b>condition</b>, sum_range)</td>
+    <td>Returns the sum of the numbers in <i>sum_range</i> where the corresponding value in <i>range</i> satisfies <i>condition</i>.</td>
     <td>If <i>sum_range</i> is not stated, then <i>range</i> is used as <i>sum_range</i>.</td>
   </tr>
   <tr>
