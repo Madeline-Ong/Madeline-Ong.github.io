@@ -1,32 +1,54 @@
 These are some common commandline commands.
 
 whoami
-date
 cd
+ls
+pwd
+cat 
+
 touch
 mkdir
 rm
-ls
-pwd
-find
-grep 
-echo 
 mv
 cp
+
+
+find
+grep 
+
+echo 
+
 head
 tail 
 
+date
+
 chmod 
 chown 
-
+chgrp
+umask 
 
 xargs
 
-
-nano / vim
+nano / vim / vi
 
 nmap
 nc 
+
+su - username
+sudo adduser username
+sudo deluser USER GROUPNAME
+
+wget 
+curl 
+ftp
+sftp
+ssh 
+scp 
+
+
+
+
 
 
 I/O redirection
