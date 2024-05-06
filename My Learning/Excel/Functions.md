@@ -343,6 +343,14 @@ If k is 1, then this function is equivalent to MAX().</td>
 
 <a name="financial"></a>
 ## Financial Functions
+Function params & their meaning:
+- pv (present value): Cash flow of borrower when loan is made (always positive)
+- fv (future value): Cash flow of borrower when loan ends (usually zero or negative)
+- nper: Number of periods for length of loan
+- rate: Interest rate per period (e.g., per month or per year)
+- pmt: Payment per period (always negative for instalments)
+The arguments that are fixed at 0 are because only lump sum payments are considered.
+
 PV
 FV
 RATE
@@ -355,6 +363,3 @@ PPMT
 | Function | Syntax | Description |
 | - | - | - |
 | TODAY | =TODAY() | Returns today's date. |
-
-<a name="math"></a>
-## Math Functions
