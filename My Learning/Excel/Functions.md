@@ -1,7 +1,8 @@
 # Intro
-These are the Excel functions taught and used in O Levels Computing
+Taking O Levels Computing exposed me to functions that can be used in Excel for data entry.
+Subsequently, I have also learnt new functions (at my internship, etc), which will be added.
 
-Do note that the params in **bold** are compulsory for the functions below. If none are bolded, all params are needed for it to work as expected.
+Note that the params in **bold** are compulsory for the functions below. If none are bolded, all params are needed so that it will work as expected.
 
 # Contents
 - [Logical Functions](#logical)
@@ -11,6 +12,7 @@ Do note that the params in **bold** are compulsory for the functions below. If n
 - [Statistical Functions](#stat)
 - [Financial Functions](#financial)
 - [Miscellaneous Functions](#misc)
+- [To Be Added](#more)
 
 <a name="logical"></a>
 ## Logical Functions
@@ -349,7 +351,7 @@ Function params & their meaning:
 - nper: Number of periods for length of loan
 - rate: Interest rate per period (e.g., per month or per year)
 - pmt: Payment per period (always negative for instalments)
-The arguments that are fixed at 0 are because only lump sum payments are considered.
+There are arguments fixed at 0 because only lump sum payments are considered.
 
 PV
 FV
@@ -363,3 +365,10 @@ PPMT
 | Function | Syntax | Description |
 | - | - | - |
 | TODAY | =TODAY() | Returns today's date. |
+
+<a name="more"></a>
+## To Be Added
+FILTER
+XLOOKUP
+
+
