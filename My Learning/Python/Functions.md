@@ -1,4 +1,4 @@
-This is more of a library of helpful string functions that I don't always remember.
+This is a library of helpful functions, as well as a place to consolidate what I know.
 
 The params in _italics_ are compulsory. 
 | Function | Description | Syntax |
@@ -18,3 +18,14 @@ The params in _italics_ are compulsory.
 Format
 | Format | Description | 
 | - | - | 
+
+
+f-strings
+
+
+List Comprehension
+
+
+Dictionary Comprehensions
+
+
