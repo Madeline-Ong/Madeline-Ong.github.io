@@ -1,0 +1,22 @@
+n refers to the input size.
+
+O(1) : Constant time complexity  == runtime is the  same, no matter the size of input
+E.g. simple expressions/equations
+
+
+O(log n) : Logarithmic time complexity == runtime grows logarithmically w input size
+(log chart)
+
+
+O(n) : Linear time complexity == runtime increase as same rate as input size (1:1)
+
+
+O(n log n) : Linearithmic time complexity
+
+
+O(n^2) : Quadratic time complexity == runtime dir proportionately w input size
+
+
+O(2^n) : Exponential Time Complexity == runtime doubles for each input
+
+O(n!) : Factorial Time Complexity
