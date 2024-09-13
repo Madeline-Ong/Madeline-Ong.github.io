@@ -22,10 +22,52 @@ Format
 
 f-strings
 
+Formatting Strings
+Paddings
+With Space (n is number of space)
+Right Align the element:
+{variable:>n}
+
+With leading 0s
+{variable:0n}
+
+zfill
+rjust
+
+
+Tenary Operator
+One-liner if-else but the expanded is more efficient
+
 
 List Comprehension
+Quick way to produce list w/o needing to initalise -> less memory used
+Base eg:
+\[<i>expression</i> <i>for_loop</i>]
+
+With If
+\[<i>expression_if_true</i> <i>for_loop</i> <i>condition</i>]
+
+With If-Else
+\[<i>expression_if_true</i> <i>condition</i> <i>expression_if_false</i> <i>for_loop</i>]
 
 
 Dictionary Comprehensions
+base case: {key_expression: value_expression for ele in iterable}
+Note: The for_loop either contains 1 element that is passed in and used for both key & value, or 2 elements
+
+1 element:
+num_list = [1,2,3]
+{x: x*2 for x in num_list}
+
+2 elements
+{key: val for (key, val) in zip(keys, values)}
+
+Can also use with If-Else
+With If
+{key_expression: value_expression for ele in iterable if condition}
+
+With If-Else (can be applied for key expression as well, eg just shows for value)
+{key_expression: (value_expression_if_true if condition value_expression_if_false)  for ele in iterable if condition}
+
 
 
