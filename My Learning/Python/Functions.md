@@ -26,48 +26,66 @@ Formatting Strings
 Paddings
 With Space (n is number of space)
 Right Align the element:
-{variable:>n}
+{<i>variable</i>:><i>n</i>}
+
+<br>
 
 With leading 0s
-{variable:0n}
+{<i>variable</i>:0<i>n</i>}
+<br>
+
 
 zfill
 rjust
+<br><br>
 
 
 Tenary Operator
 One-liner if-else but the expanded is more efficient
+<br>
 
 
 List Comprehension
 Quick way to produce list w/o needing to initalise -> less memory used
 Base eg:
-\[<i>expression</i> <i>for_loop</i>]
+\[<i>expression</i> for <i>element</i> in <i>iterable</i>]
+<br>
 
 With If
-\[<i>expression_if_true</i> <i>for_loop</i> <i>condition</i>]
+\[<i>expression_if_true</i> for <i>element</i> in <i>iterable</i> <i>condition</i>]
+<br>
 
 With If-Else
-\[<i>expression_if_true</i> <i>condition</i> <i>expression_if_false</i> <i>for_loop</i>]
+\[<i>expression_if_true</i> if <i>condition</i> <i>expression_if_false</i> for <i>element</i> in <i>iterable</i>]
+<br>
+<br>
 
 
 Dictionary Comprehensions
-base case: {key_expression: value_expression for ele in iterable}
+base case: {<i>key_expression</i>: <i>value_expression</i> for <i>element</i> in <i>iterable</i>}
 Note: The for_loop either contains 1 element that is passed in and used for both key & value, or 2 elements
+<br>
 
 1 element:
+{<i>key_expression</i>: <i>value_expression</i> for <i>element</i> in <i>iterable</i>}
 num_list = [1,2,3]
 {x: x*2 for x in num_list}
+<br>
 
 2 elements
+{<i>key_expression</i>: <i>value_expression</i> for <i>elements</i> in <i>iterables</i>}
 {key: val for (key, val) in zip(keys, values)}
+<br>
 
 Can also use with If-Else
 With If
-{key_expression: value_expression for ele in iterable if condition}
+{<i>key_expression</i>: <i>value_expression</i> for <i>element</i> in <i>iterable</i> if <i>condition</i>}
+<br>
 
 With If-Else (can be applied for key expression as well, eg just shows for value)
-{key_expression: (value_expression_if_true if condition value_expression_if_false)  for ele in iterable if condition}
+{<i>key_expression</i>: (<i>value_expression_if_true</i> if <i>condition</i> <i>value_expression_if_false</i>)  for <i>element</i> in <i>iterable</i> if <i>condition</i>}
 
+<br>
+<br>
 
 
