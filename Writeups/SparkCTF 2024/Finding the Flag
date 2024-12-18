@@ -1,0 +1,12 @@
+Tag: Forensics, Easy
+
+Challenge:
+Take a look at this text file, there might be a flag within this text file.
+
+Oh wait, there are multiple text files.
+
+WARNING: Don't Unzip this folder anywhere important, or download it onto a Virtual machine to make use of the file.
+
+
+I used grep because I remembered that it can not only search contents, it can also search recursively 
+grep -r "pattern" /dir_path
