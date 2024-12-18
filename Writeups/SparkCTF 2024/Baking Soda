@@ -1,0 +1,11 @@
+Tag: Forensics, Easy
+
+Challenge:
+You've been scanning QR Codes, but do you understand how it works? Well, we have the challenge just for you! Finish the QR Code to get the flag!
+
+Just saying, all you need to do is fix the alignment.
+
+
+When I opened up the file, I realised that the QR code was missing the 3 corner squares. So I filled those in, and Voila, the QR code revealed the flag. 
+
+Another reason that I knew I didn't have to do anything else was because it said to fix the alignment, not the code itself.
