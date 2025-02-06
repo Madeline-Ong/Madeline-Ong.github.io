@@ -89,3 +89,7 @@ With If-Else (can be applied for key expression as well, eg just shows for value
 <br>
 
 
+itertools
+permutations
+combinations
+product
