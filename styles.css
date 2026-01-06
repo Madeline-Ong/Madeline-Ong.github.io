@@ -1,0 +1,7 @@
+/* Overall style file */
+
+a.disabled {
+    pointer-events: none;
+    color: #ccc;
+}
+    
