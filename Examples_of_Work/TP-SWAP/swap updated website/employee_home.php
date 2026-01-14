@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<?php
+session_start();
+include 'check_session.php'; 
+?>
+<head>
+<meta charset="UTF-8">
+<title>Employee Homepage</title>
+<?php include 'shared_css_home.php'; ?>
+</head>
+<body>
+	<?php 
+	   include "navbar.php";
+	?>
+	<div class="container">
+		<a href="leave_view.php" class="block">
+			<img src="https://pic.onlinewebfonts.com/thumbnails/icons_129824.svg">
+			<h2>Leave Application</h2>
+		</a>
+
+		<a href="mc_view.php" class="block">
+			<img src="https://pic.onlinewebfonts.com/thumbnails/icons_563681.svg">
+			<h2>MC Application</h2>
+		</a>
+
+		<a href="personal_information.php" class="block">
+			<img src="https://pic.onlinewebfonts.com/thumbnails/icons_559210.svg">
+			<h2>Personal Information</h2>
+		</a>
+	</div>
+</body>
+</html>
