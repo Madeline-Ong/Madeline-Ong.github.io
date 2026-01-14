@@ -1,0 +1,11 @@
+More options for SELECT
+ORDER BY 
+
+GROUP BY 
+
+LIMIT
+
+JOIN
+
+UNION
+
