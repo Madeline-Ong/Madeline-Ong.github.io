@@ -1,0 +1,457 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <meta name="description" content="Services - Attack Surface Management" />
+    <title>Services - Attack Surface Management</title>
+    <link href="../static/css/bootstrap.min.css" rel="stylesheet">
+    <link href="../static/css/style1.css" rel="stylesheet">
+    <link href="https://cdn.datatables.net/1.13.6/css/dataTables.bootstrap5.min.css" rel="stylesheet">
+    <link href="{{ url_for('static', filename='css/styles.css') }}" rel="stylesheet">
+    <script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script>
+</head>
+
+<body class="sb-nav-fixed">
+    <nav class="sb-topnav navbar navbar-expand navbar-dark bg-dark">
+        <a class="navbar-brand ps-3" href="{{ url_for('main_page') }}">Dashboard</a>
+        <button class="btn btn-link btn-sm order-1 order-lg-0 me-4 me-lg-0" id="sidebarToggle" href="#"><i
+                class="fas fa-bars"></i></button>
+
+        <!-- Start Service Discovery Button -->
+        <button class="btn btn-success btn-sm" id="startServiceDiscBtn" data-bs-toggle="modal"
+            data-bs-target="#startServDiscModal" style="position: absolute; right: 10px; margin-top: 10px;">Start
+            Scan</button>
+    </nav>
+
+    <!-- Start Service Disc Modal w IP range selection -->
+    <div class="modal fade" id="servDiscModal" tabindex="-1" aria-labelledby="servDiscModalLabel" aria-hidden="true"
+        data-bs-backdrop="static" data-bs-keyboard="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="servDiscModalLabel">Select an IP Range to Scan for services.</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <!-- Dropdown for IP Range Selection -->
+                    <select id="IPRangeDropdown" class="form-select" aria-label="Select IP Range">
+                        <option selected disabled>Select an IP Range</option>
+                    </select>
+                    <div id="servLoadingSpinner" style="display:none;">
+                        <i class="fas fa-spinner fa-spin"></i> Loading IP Ranges...
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary" id="confirmServDisc" disabled>Confirm</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- Toast Container -->
+    <div id="toastContainer" class="position-fixed bottom-0 end-0 p-3" style="z-index: 1055;"></div>
+
+    <!-- Confirmation Modal for Scan Start -->
+    <div class="modal fade" id="servDiscStartedModal" tabindex="-1" aria-labelledby="servDiscStartedModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="servDiscStartedModalLabel">Scan Started</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <p>Your scan has been started successfully.</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Scan Completed Modal (Global) -->
+    <div class="modal fade" id="scanCompletedModal" tabindex="-1" aria-labelledby="scanCompletedModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="scanCompletedModalLabel">Scan Completed</h5>
+                </div>
+                <div class="modal-body">
+                    Scan completed successfully! You will be redirected shortly.
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"
+                        aria-label="Close">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="layoutSidenav">
+        <div id="layoutSidenav_nav">
+            <nav class="sb-sidenav accordion sb-sidenav-dark" id="sidenavAccordion">
+                {% include '/sidebar.html' %}
+            </nav>
+        </div>
+
+        <div id="layoutSidenav_content">
+            <main>
+                <div class="container">
+                    <h2 class="my-4">Services Overview</h2>
+                    <!-- Table Section -->
+                    <!-- Admin View: Always at the top, followed by alphabetical order of other companies -->
+                    {% if is_admin %}
+                        <!-- Check if "Overall" exists and display it first -->
+                        {% if "Overall" in grouped_services %}
+                        <div class="card mb-4">
+                            <div class="card-header">
+                                <i class="fas fa-building me-1"></i> Admin
+                            </div>
+                            <div class="card-body">
+                                <table id="overallTable" class="table table-bordered admin-services-table">
+                                    <thead>
+                                        <tr>
+                                            <th class="table_col_13">IP Address</th>
+                                            <th class="table_col_13">Services</th>
+                                            <th class="table_col_auto">Version</th>
+                                            <th class="table_col_13">Ports</th>
+                                            <th class="table_col_13">Package Name</th>
+                                            <th class="table_col_13">Process Name</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {% for ip, services in grouped_services["Overall"].items() %}
+                                            {% for service in services %}
+                                            <tr>
+                                                <td>{{ ip }}</td>
+                                                <td>{{ service['Services'] or 'N/A' }}</td>
+                                                <td>{{ service['Version'] or 'N/A' }}</td>
+                                                <td>{{ service['Ports'] or 'N/A' }}</td>
+                                                <td>{{ service['Package_Name'] or 'N/A' }}</td>
+                                                <td>{{ service['Process_Name'] or 'N/A' }}</td>
+                                            </tr>
+                                            {% endfor %}
+                                        {% endfor %}
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        {% endif %}
+
+                        <!-- Sort companies alphabetically and display services -->
+                        {% for company, services in grouped_services.items() | list | sort(attribute=0) %}
+                        {% if company != "Overall" %}
+                        <div class="card mb-4">
+                            <div class="card-header">
+                                <i class="fas fa-building me-1"></i> {{ company }}
+                            </div>
+                            <div class="card-body">
+                                <!-- Services Table -->
+                                <table id="services-table-{{ loop.index }}"
+                                    class="table table-bordered admin-services-table">
+                                    <thead>
+                                        <tr>
+                                            <th class="table_col_13">IP Address</th>
+                                            <th class="table_col_13">Services</th>
+                                            <th class="table_col_auto">Version</th>
+                                            <th class="table_col_13">Ports</th>
+                                            <th class="table_col_13">Package Name</th>
+                                            <th class="table_col_13">Process Name</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {% for ip, service_list in services.items() %}
+                                        {% for service in service_list %}
+                                        <tr>
+                                            <td>{{ ip }}</td>
+                                            <td>{{ service['Services'] or 'N/A' }}</td>
+                                            <td>{{ service['Version'] or 'N/A' }}</td>
+                                            <td>{{ service['Ports'] or 'N/A' }}</td>
+                                            <td>{{ service['Package_Name'] or 'N/A' }}</td>
+                                            <td>{{ service['Process_Name'] or 'N/A' }}</td>
+                                        </tr>
+                                        {% endfor %}
+                                        {% endfor %}
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        {% endif %}
+                        {% endfor %}
+                    {% endif %}
+
+
+                    <!-- Non-Admin View: Services Data for the User's Company -->
+                    {% if not is_admin %}
+                    <table id="servicesTable" class="table table-striped table-bordered">
+                        <thead>
+                            <tr>
+                                <th class="table_col_13">IP Address</th>
+                                <th class="table_col_13">Services</th>
+                                <th class="table_col_auto">Version</th>
+                                <th class="table_col_13">Ports</th>
+                                <th class="table_col_13">Package Name</th>
+                                <th class="table_col_13">Process Name</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for ip, services in services_data.items() %}
+                            {% if services %}
+                            {% for service in services['all_services'] %}
+                            <tr>
+                                <td>{{ ip }}</td>
+                                <td>{{ service['Services'] or 'N/A' }}</td>
+                                <td>{{ service['Version'] or 'N/A' }}</td>
+                                <td>{{ service['Ports'] or 'N/A' }}</td>
+                                <td>{{ service['Package_Name'] or 'N/A' }}</td>
+                                <td>{{ service['Process_Name'] or 'N/A' }}</td>
+                            </tr>
+                            {% endfor %}
+                            {% endif %}
+                            {% endfor %}
+
+                        </tbody>
+                    </table>
+                    {% endif %}
+                </div>
+            </main>
+        </div>
+    </div>
+    <!-- JavaScript -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.13.6/js/dataTables.bootstrap5.min.js"></script>
+    <script src="../static/cdn/bootstrap.min.js" crossorigin="anonymous"></script>
+    <!-- <script src="../static/cdn/scan.js"></script> -->
+
+    <script>
+        $(document).ready(function () {
+            let scanInProgress = false;
+            let pollingIntervalId = null;
+
+            // Restore scan state on page load
+            const savedState = localStorage.getItem('scanState');
+            if (savedState) {
+                const scanState = JSON.parse(savedState);
+                scanState.messages.forEach((entry) => {
+                    showToast(entry.message, entry.type || 'info');
+                });
+            }
+
+            // Start Scan Button
+            $('#startServiceDiscBtn').click(function () {
+                if (scanInProgress) return; // Prevent starting a new scan while another is in progress
+
+                const modalElement = document.getElementById('servDiscModal');
+                const modal = new bootstrap.Modal(modalElement);
+                modal.show();
+
+                // Fetch IP ranges relv to user's company 
+                $.ajax({
+                    url: '/services_get_ip_ranges',
+                    type: 'GET',
+                    success: function (response) {
+                        const dropdown = $('#IPRangeDropdown');
+                        dropdown.empty();
+
+                        if (response.success && response.ip_ranges.length > 0) {
+                            dropdown.append('<option selected disabled>Select an IP Range</option>');
+                            response.ip_ranges.forEach(ip => dropdown.append(`<option value="${ip}">${ip}</option>`));
+                            $('#confirmServDisc').prop('disabled', false);
+                        } else {
+                            dropdown.append('<option selected disabled>No IP ranges available for your company.</option>');
+                            $('#confirmServDisc').prop('disabled', true);
+                        }
+                    },
+                    error: function () {
+                        showToast('Error fetching IP ranges.', 'error');
+                    }
+                });
+            });
+
+            // Confirm and Start Scan
+            $('#confirmServDisc').click(function () {
+                const selectedIp = $('#IPRangeDropdown').val();
+                if (!selectedIp) {
+                    showToast('Please select an IP range!', 'error');
+                    return;
+                }
+
+                // Hide the modal
+                const modalElement = document.getElementById('servDiscModal');
+                const modal = bootstrap.Modal.getInstance(modalElement);
+                modal.hide(); // Close the modal
+
+                // Show initial "Scan started" toast
+                showToast(`Scan started for IP range: ${selectedIp}`, 'success');
+
+                // Disable the start button and show a loading spinner
+                $('#startServiceDiscBtn').prop('disabled', true);
+                $('#servLoadingSpinner').show();
+
+                // Start the scan via AJAX
+                $.ajax({
+                    url: '/get_services_version',
+                    type: 'POST',
+                    data: { ip_range: selectedIp },
+                    timeout: 300000,
+                    success: function (response) {
+                        if (response.success) {
+                            scanInProgress = true;
+                            startPolling(); // Start polling for real-time updates
+                        } else {
+                            showToast(response.message || 'Failed to start the scan.', 'error');
+                            //resetScanState();
+                        }
+                    },
+                    error: function () {
+                        showToast('Error starting the scan.', 'error');
+                       // resetScanState();
+                    }
+                });
+            });
+            // Global variable to track previously displayed statuses
+            let previousStatus = {
+                Services: null,
+                CVE: null,
+            };
+
+            // Start polling for real-time updates
+            function startPolling() {
+                if (pollingIntervalId) return; // Prevent multiple polling intervals
+
+                pollingIntervalId = setInterval(() => {
+                    $.ajax({
+                        url: '/get_scan_status', // Backend API for status updates
+                        type: 'GET',
+                        success: function (response) {
+                            if (response.success) {
+                                const status = response.status;
+
+                                // Handle Services Status
+                                if (status.Services !== previousStatus.Services) {
+                                    if (status.Services === 'Running') {
+                                        showToast("Service scan started. Please wait...", 'info');
+                                    } else if (status.Services === 'Completed') {
+                                        showToast("Services have been stored successfully.", 'success');
+                                    } else if (status.Services === 'Failed') {
+                                        showToast("Service scan failed. Please retry.", 'error');
+                                        clearPolling();
+                                        return;
+                                    } else if (status.Services === 'Not Running') {
+                                        showToast("Service scan is pending. Please wait...", 'info');
+                                    }
+                                    previousStatus.Services = status.Services; // Update tracked status
+                                }
+
+                                // Handle CVE Status
+                                if (status.CVE !== previousStatus.CVE) {
+                                    if (status.CVE === 'Running') {
+                                        showToast("CVE scan started. Please hold on...", 'info');
+                                    } else if (status.CVE === 'Completed') {
+                                        showToast("CVE scan completed successfully.", 'success');
+                                        // Redirect when both are completed
+                                        if (status.Services === 'Completed' && status.CVE === 'Completed') {
+                                            showToast("Scan completed successfully! Redirecting to the main page...", 'success');
+                                            clearPolling();
+                                            setTimeout(() => {
+                                                window.location.href = '/main_page';
+                                            }, 3000);
+                                        }
+                                    } else if (status.CVE === 'Failed') {
+                                        showToast("CVE scan failed. Please retry.", 'error');
+                                        clearPolling();
+                                    } else if (status.CVE === 'Not Running') {
+                                        showToast("CVE scan is pending. Please wait...", 'info');
+                                    }
+                                    previousStatus.CVE = status.CVE; // Update tracked status
+                                }
+                            } else {
+                                console.error("Error fetching scan status:", response.message || 'Unknown error');
+                            }
+                        },
+                        error: function (xhr, status, error) {
+                            console.error('Error polling scan status. Status:', status, 'Error:', error);
+                        }
+                    });
+                }, 2000); // Poll every 2 seconds
+            }
+
+            // Stop polling
+            function clearPolling() {
+                if (pollingIntervalId) {
+                    clearInterval(pollingIntervalId);
+                    pollingIntervalId = null;
+                }
+            }
+
+            // Toast notification function
+            function showToast(message, type = 'success') {
+                const toastContainer = $('#toastContainer');
+                let bgColorClass = '';
+
+                if (type === 'success') {
+                    bgColorClass = 'text-bg-success';
+                } else if (type === 'error') {
+                    bgColorClass = 'text-bg-danger';
+                } else if (type === 'info') {
+                    bgColorClass = 'text-bg-info';
+                } else if (type === 'warning') {
+                    bgColorClass = 'text-bg-warning';
+                }
+
+                const toastId = `toast-${Date.now()}`;
+
+                toastContainer.append(`
+        <div id="${toastId}" class="toast align-items-center ${bgColorClass} border-0" role="alert" aria-live="assertive" aria-atomic="true">
+            <div class="d-flex">
+                <div class="toast-body">${message}</div>
+                <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
+            </div>
+        </div>
+    `);
+
+                const toast = new bootstrap.Toast($(`#${toastId}`));
+                toast.show();
+
+
+
+                // Automatically remove the toast after it hides
+                $(`#${toastId}`).on('hidden.bs.toast', function () {
+                    $(this).remove();
+                });
+            }
+        });
+    </script>
+
+
+    <script>
+        $(document).ready(function () {
+            // Initialize DataTables for Admin View (Multiple Tables)
+            $('.admin-services-table').each(function () {
+                $(this).DataTable({
+                    paging: true,
+                    searching: true,
+                    ordering: true
+                });
+            });
+
+            // Initialize DataTables for Non-Admin View (Single Table)
+            $('#servicesTable').DataTable({
+                paging: true,
+                searching: true,
+                ordering: true
+            });
+        });
+    </script>
+
+
+</body>
+
+</html>

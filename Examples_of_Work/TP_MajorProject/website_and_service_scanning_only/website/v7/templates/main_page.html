@@ -1,0 +1,466 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <meta name="description" content="" />
+    <meta name="author" content="" />
+    <title>Dashboard</title>
+
+    <!-- Bootstrap CSS -->
+    <link href="./static/css/bootstrap.min.css" rel="stylesheet">
+    
+    <!-- FontAwesome Icons -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css" rel="stylesheet">
+    
+    <!-- Custom Styles (if needed) -->
+    <link href="{{ url_for('static', filename='css/styles.css') }}" rel="stylesheet">
+
+</head>
+
+<body class="sb-nav-fixed">
+    <!-- Top Navbar -->
+    <nav class="sb-topnav navbar navbar-expand navbar-dark bg-dark">
+        <a class="navbar-brand ps-3" href="{{ url_for('main_page') }}">Dashboard</a>
+        <button class="btn btn-link btn-sm order-1 order-lg-0 me-4 me-lg-0" id="sidebarToggle" href="#"><i class="fas fa-bars"></i></button>
+        <!-- Start Scan Button -->
+        <button class="btn btn-success btn-sm" id="ipRangeInput" data-bs-toggle="modal" data-bs-target="#ipRangeModal"
+            style="position: absolute; right: 10px; margin-top: 10px;">Enter IP Range</button>
+    </nav>
+
+    <!-- Sidebar Navigation -->
+    <div id="layoutSidenav">
+        <div id="layoutSidenav_nav">
+            <nav class="sb-sidenav accordion sb-sidenav-dark" id="sidenavAccordion">
+                    {% include '/sidebar.html' %}
+            </nav>
+        </div>
+
+        <!-- Main Content Area -->
+        <div id="layoutSidenav_content">
+            <main>
+                <div class="container-fluid px-4">
+                    <div class="mt-4" style="display: flex; align-items: center; width: 100%;">
+                        <h1 style="flex: 1;">Dashboard</h1>
+                        <div style="flex: 2;"></div>
+                        <label for="ip_address" style="margin-right: 10px;"></label>
+                        <select class="form-control" id="ip_address" name="ip_address" required style="flex: 1;">
+                            <option value="" disabled selected>Select an IP Address</option>
+                        </select>
+                        
+                        
+                    </div>                    
+                    
+                    <script>
+                        // Fetch IP addresses when the page loads
+document.addEventListener("DOMContentLoaded", function () {
+    loadIPAddresses();
+
+    // Add event listener to dropdown to update chart based on IP selection
+    document.getElementById('ip_address').addEventListener('change', function () {
+        fetchSeverityData(this.value);
+    });
+});
+
+function loadIPAddresses() {
+    const ipDropdown = document.getElementById('ip_address');
+
+    // Reset dropdown and do not add the "Overall" option here
+    ipDropdown.innerHTML = ''; // Clear the dropdown entirely
+
+    fetch('/get_ip_addresses')
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+            return response.json();
+        })
+        .then(data => {
+            if (data.error) {
+                console.error("Backend error:", data.error);
+                ipDropdown.innerHTML += '<option value="" disabled>Error loading IP addresses</option>';
+                return;
+            }
+
+            const options = []; // Temporary array to hold options
+
+            if (data.role === "Admin") {
+                // Populate companies and their IPs
+                Object.entries(data.companies).forEach(([company, companyData]) => {
+                    // Add "Overall - Company" option
+                    const overallCompanyOption = document.createElement('option');
+                    overallCompanyOption.value = companyData.overall;
+                    overallCompanyOption.textContent = `Overall - ${company}`;
+                    options.push(overallCompanyOption);
+
+                    // Add IP addresses for the company
+                    companyData.ips.forEach(ip => {
+                        const ipOption = document.createElement('option');
+                        ipOption.value = ip;
+                        ipOption.textContent = `${company} - ${ip}`;
+                        options.push(ipOption);
+                    });
+                });
+            } else {
+
+                 // Add the "Overall" option only once, depending on the role
+            const overallOption = document.createElement('option');
+            overallOption.value = "overall";
+            overallOption.textContent = "Overall";
+            options.push(overallOption);
+                // Regular user: Populate only their company's IPs
+                data.ips.forEach(ip => {
+                    const ipOption = document.createElement('option');
+                    ipOption.value = ip;
+                    ipOption.textContent = ip;
+                    options.push(ipOption);
+                });
+            }
+
+            // Append all options to the dropdown
+            options.forEach(option => ipDropdown.appendChild(option));
+
+            // Set default selection for Admins to "Overall - Admin"
+            if (data.role === "Admin") {
+                ipDropdown.value = "overall-admin"; // Set default to "Overall - Admin"
+                fetchSeverityData("overall-admin"); // Fetch data for "Overall - Admin"
+            } else {
+                ipDropdown.value = "overall"; // Set "Overall" as the default for regular users
+                fetchSeverityData("overall"); // Fetch default severity data
+            }
+        })
+        .catch(error => {
+            console.error('Error fetching IP addresses:', error);
+            ipDropdown.innerHTML += '<option value="" disabled>Failed to load IP addresses</option>';
+        });
+}
+
+
+                    </script>
+                    
+                    
+                                        <!-- Modal for IP Range Input -->
+                                        <div class="modal fade" id="ipRangeModal" tabindex="-1" aria-labelledby="ipRangeModalLabel" aria-hidden="true">
+                                            <div class="modal-dialog">
+                                                <div class="modal-content">
+                                                    <div class="modal-header">
+                                                        <h5 class="modal-title" id="ipRangeModalLabel">Enter Valid IPv4 Range for Scan</h5>
+                                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                    </div>
+                                                    <div class="modal-body">
+                                                        <!-- Form to Submit IP Range -->
+                                                        <form id="ipRangeForm" action="{{ url_for('store_ip_range') }}" method="POST">
+                                                            <div class="form-group">
+                                                                <label for="ipRangeInput">IP Range</label>
+                                                                <input
+                                                                    type="text"
+                                                                    class="form-control"
+                                                                    id="ipRangeInput"
+                                                                    name="ip_range"
+                                                                    placeholder="Enter IP range (e.g., 192.168.0.1/24)"
+                                                                    required
+                                                                >
+                                                            </div>
+                                                            <!-- Error Message -->
+                                                            <div id="ipRangeErrorMessage" class="text-danger mt-2" style="display: none;"></div>
+                                                            <div class="modal-footer">
+                                                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                                                                <button type="submit" class="btn btn-primary">Submit</button>
+                                                            </div>
+                                                        </form>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        
+                        
+
+                <!-- Confirmation Modal for Valid and Private IP -->
+                <div class="modal fade" id="confirmationModal" tabindex="-1" aria-labelledby="confirmValidPrivateModalLabel" aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="confirmValidPrivateModalLabel">Confirmation</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+                                <p>Dynamic message will appear here...</p>
+                            </div>
+                            
+                            <div class="modal-footer">
+                                <!-- Trigger the storing of validated IP range -->
+                                <button type="button" class="btn btn-primary" id="confirmButton" onclick="storeValidatedIPRange()">Confirm</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Charts Section -->
+                    <div class="row">
+                        <!-- Bar Chart -->
+                        <div class="col-lg-6">
+                            <div class="card mb-4">
+                                <div class="card-header">
+                                    <i class="fas fa-chart-bar me-1"></i> Severity Distribution (Bar Chart)
+                                </div>
+                                <div class="card-body">
+                                    <canvas id="myBarChart" width="100%" height="50"></canvas>
+                                </div>
+                                <div class="card-footer small text-muted">Updated just now</div>
+                            </div>
+                        </div>
+
+                        <!-- Pie Chart -->
+                        <div class="col-lg-6">
+                            <div class="card mb-4">
+                                <div class="card-header">
+                                    <i class="fas fa-chart-pie me-1"></i> Severity Distribution (Pie Chart)
+                                </div>
+                                <div class="card-body">
+                                    <canvas id="myPieChart" width="100%" height="50"></canvas>
+                                </div>
+                                <div class="card-footer small text-muted">Updated just now</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+                    <!-- Scan Summary and Severity Rating Section -->
+                    <div class="row">
+                        <div class="col-lg-8">
+                            <div class="card mb-4">
+                                <div class="card-header">
+                                    <i class="fas fa-tasks me-1"></i> Scan Summary
+                                </div>
+                                <div class="card-body" id="scanSummary">
+                                    <p>Scan has not been started yet.</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Overall Severity Rating -->
+<div class="col-lg-4">
+    <div class="card mb-4">
+        <div class="card-header">
+            <i class="fas fa-exclamation-circle me-1"></i> Overall Severity Rating
+        </div>
+        <div class="card-body" id="severityRating">
+            <p id="averageSeverity">Average Severity Score: Calculating...</p>
+            <p id="severityCategory">Severity Rating: Calculating...</p>
+        </div>
+    </div>
+</div>
+
+
+                </div>
+
+            <!-- Footer -->
+            <footer class="py-4 bg-light mt-auto">
+                <div class="container-fluid px-4">
+                    <div class="d-flex align-items-center justify-content-between small">
+                        <div class="text-muted">Copyright &copy; Your Website 2023</div>
+                        <div>
+                            <a href="#">Privacy Policy</a>
+                            &middot;
+                            <a href="#">Terms &amp; Conditions</a>
+                        </div>
+                    </div>
+                </div>
+            </footer>
+        </div>
+    </div>
+
+    <!-- Bootstrap JS and Popper.js -->
+    <script src="./static/cdn/popper.min.js"></script>
+    <script src="./static/cdn/bootstrap.min.js"></script>
+
+    <!-- Chart.js for charts -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.min.js"></script>
+
+
+    <script>
+        // Trigger fetching severity data when an IP address is selected
+        document.getElementById("ip_address").addEventListener("change", function () {
+            const selectedIPAddress = this.value; // Get the selected IP address
+            if (selectedIPAddress) {
+                fetchSeverityData(selectedIPAddress); // Call the function to fetch and update the data
+            }
+        });
+    
+        // Global variables to track chart instances
+let barChartInstance = null;
+let pieChartInstance = null;
+
+// Fetch Severity Data when IP address is selected or when the page loads
+function fetchSeverityData(ipAddress = "overall") { // Default to "overall"
+    if (!ipAddress) {
+        alert("Please select an IP address.");
+        return;
+    }
+
+    const endpoint = ipAddress === "overall" ? "/severity_data_overall" : `/severity_data?ip_address=${encodeURIComponent(ipAddress)}`;
+
+    fetch(endpoint)
+        .then((response) => response.json())
+        .then((data) => {
+            console.log("Fetched Severity Data:", data);
+
+            // Data validation
+            if (!data || data.error) {
+                alert(data.error || "Invalid data received.");
+                return;
+            }
+
+            // Update the Overall Severity Rating section
+            document.getElementById("averageSeverity").textContent = `Average Severity Score: ${data.average_score.toFixed(2)}`;
+            document.getElementById("severityCategory").textContent = `Severity Rating: ${data.severity_category}`;
+
+            // Destroy existing chart instances, if any
+            if (barChartInstance) barChartInstance.destroy();
+            if (pieChartInstance) pieChartInstance.destroy();
+
+            // Create a new bar chart
+            const barCtx = document.getElementById("myBarChart").getContext("2d");
+            barChartInstance = new Chart(barCtx, {
+                type: "bar",
+                data: {
+                    labels: ["None", "Low", "Medium", "High", "Critical"],
+                    datasets: [
+                        {
+                            label: "Number of Issues",
+                            data: ["None", "Low", "Medium", "High", "Critical"].map(
+                                (level) => data.distribution[level] || 0
+                            ),
+                            backgroundColor: ["gray", "green", "yellow", "orange", "red"],
+                        },
+                    ],
+                },
+                options: {
+                    responsive: true,
+                    scales: {
+                        y: { beginAtZero: true },
+                        x: { title: { display: true, text: "Severity Levels" } },
+                    },
+                },
+            });
+
+            // Create a new pie chart
+            const pieCtx = document.getElementById("myPieChart").getContext("2d");
+            pieChartInstance = new Chart(pieCtx, {
+                type: "pie",
+                data: {
+                    labels: ["None", "Low", "Medium", "High", "Critical"],
+                    datasets: [
+                        {
+                            data: ["None", "Low", "Medium", "High", "Critical"].map(
+                                (level) => data.distribution[level] || 0
+                            ),
+                            backgroundColor: ["gray", "green", "yellow", "orange", "red"],
+                        },
+                    ],
+                },
+                options: {
+                    responsive: true,
+                },
+            });
+
+
+            // Update the Scan Summary section
+            const scanSummary = document.getElementById("scanSummary");
+            scanSummary.innerHTML = `
+                <p><strong>${ipAddress === "overall" ? "Overall Data" : `IP Address: ${data.ip_address}`}</strong></p>
+                <p><strong>Total Issues:</strong> ${
+                    Object.values(data.distribution).reduce((a, b) => a + b, 0)
+                }</p>
+                <p><strong>Severity Distribution:</strong></p>
+                <ul>
+                    <li>None: ${data.distribution.None || 0}</li>
+                    <li>Low: ${data.distribution.Low || 0}</li>
+                    <li>Medium: ${data.distribution.Medium || 0}</li>
+                    <li>High: ${data.distribution.High || 0}</li>
+                    <li>Critical: ${data.distribution.Critical || 0}</li>
+                </ul>
+            `;
+        })
+        .catch((error) => console.error("Error fetching severity data:", error));
+}
+
+
+    </script>
+    
+
+    <script>
+
+    // Function to close the confirmation modal
+function closeConfirmationModal() {
+    const confirmationModalElement = document.getElementById('confirmationModal');
+    if (confirmationModalElement) {
+        confirmationModalElement.style.display = 'none'; // Hide the modal
+        confirmationModalElement.classList.remove('show'); // Remove the Bootstrap "show" class
+        document.body.classList.remove('modal-open'); // Remove modal-open class from body
+        const backdrop = document.querySelector('.modal-backdrop');
+        if (backdrop) {
+            backdrop.remove(); // Remove the backdrop
+        }
+    }
+}
+
+    </script>
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    const form = document.getElementById('ipRangeForm');
+    const errorMessageElement = document.getElementById('ipRangeErrorMessage');
+    const ipRangeModalEl = document.getElementById('ipRangeModal');
+    const ipRangeModal = bootstrap.Modal.getInstance(ipRangeModalEl) || new bootstrap.Modal(ipRangeModalEl);
+    const confirmationModalEl = document.getElementById('confirmationModal');
+    const confirmationModal = new bootstrap.Modal(confirmationModalEl);
+
+    form.addEventListener('submit', function (event) {
+        event.preventDefault();
+
+        const formData = new FormData(form);
+
+        fetch(form.action, {
+            method: 'POST',
+            body: formData,
+        })
+            .then((response) => response.json())
+            .then((data) => {
+                if (data.success) {
+                    // Success case: IP range stored
+                    errorMessageElement.style.display = 'none';
+                    ipRangeModal.hide();
+                    document.querySelector('#confirmationModal .modal-body').textContent =
+                        'IP range successfully validated and stored in the database.';
+                    confirmationModal.show();
+                } else {
+                    // Error case: IP range not unique
+                    errorMessageElement.style.display = 'none';
+                    ipRangeModal.hide();
+                    document.querySelector('#confirmationModal .modal-body').textContent =
+                        data.error || 'An error occurred.';
+                    confirmationModal.show();
+                }
+            })
+            .catch((error) => {
+                console.error('Error:', error);
+                errorMessageElement.textContent = error.message || 'Invalid CIDR IPv4 notation.';
+                errorMessageElement.style.display = 'block';
+            });
+    });
+
+    document.getElementById('confirmButton').addEventListener('click', function () {
+        confirmationModal.hide();
+        location.reload(); // Reload the page after confirming
+    });
+});
+   </script>
+
+
+
+</body>
+
+</html>

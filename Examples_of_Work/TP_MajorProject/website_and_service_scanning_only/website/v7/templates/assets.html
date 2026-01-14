@@ -1,0 +1,620 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <meta name="description" content="Assets - Attack Surface Management" />
+    <meta name="author" content="Your Name" />
+    <title>Assets - Attack Surface Management</title>
+    <link href="../static/css/bootstrap.min.css" rel="stylesheet">
+    <link href="../static/css/style1.css" rel="stylesheet">
+    <link href="https://cdn.datatables.net/1.13.6/css/dataTables.bootstrap5.min.css" rel="stylesheet">
+    <link href="../static/css/styles.css" rel="stylesheet">
+    <script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script>
+</head>
+
+<body class="sb-nav-fixed">
+    <nav class="sb-topnav navbar navbar-expand navbar-dark bg-dark">
+        <a class="navbar-brand ps-3" href="{{ url_for('main_page') }}">Dashboard</a>
+        <button class="btn btn-link btn-sm order-1 order-lg-0 me-4 me-lg-0" id="sidebarToggle" href="#"><i
+                class="fas fa-bars"></i></button>
+        <div class="d-flex justify-content-end w-100 pe-3">
+            <!-- Start Scan Button -->
+            <button class="btn btn-success btn-sm me-2" id="startScanBtn" data-bs-toggle="modal"
+                data-bs-target="#assetScanModal">
+                Asset Discovery
+            </button>
+            <!-- Enter Credentials (SSH Keys) Button -->
+            <button class="btn btn-success btn-sm" id="addCredentialBtn" data-bs-toggle="modal"
+                data-bs-target="#addCredentialModal">
+                Add Credentials
+            </button>
+        </div>
+    </nav>
+
+
+    <!-- IP Range Selection Modal -->
+    <div class="modal fade" id="assetScanModal" tabindex="-1" aria-labelledby="assetScanModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="assetScanModalLabel">Select a Validated IP Range</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <!-- Dropdown for IP Range Selection -->
+                    <select id="assetIpRangeDropdown" class="form-select" aria-label="Select IP Range">
+                        <option selected disabled>Select a Validated IP Range</option>
+                    </select>
+                    <div id="assetLoadingSpinner" style="display:none;">
+                        <i class="fas fa-spinner fa-spin"></i> Loading IP Ranges...
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary" id="confirmAssetScan" disabled>Confirm</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Select IP from dropdown + add credential modal -->
+    <div class="modal fade" id="addCredentialModal" tabindex="-1" aria-labelledby="addCredentialModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="addCredentialModalLabel">Enter Credentials</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <!-- Where the err msg will be -->
+                    <div id="errorMessage" class="alert alert-danger d-none"></div>
+
+                    <form id="credentialForm">
+                        <!-- Dropdown for IP Address Selection -->
+                        <div class="mb-3">
+                            <label for="ipAddressDropdown" class="form-label">IP Address</label>
+                            <select class="form-select" id="ipAddressDropdown" name="ipAddressDropdown" required style="flex: 1;">
+                                <option disabled selected>Select an IP Address</option>
+                            </select>
+                        </div>
+                        <div class="mb-3">
+                            <label for="inputCredential" class="form-label">Private Key</label>
+                            <textarea class="form-control" id="inputCredential" name="inputCredential" rows="7" placeholder="Enter your private key" required></textarea>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary" id="confirmAddCredential" disabled>Confirm</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- Toast Container -->
+    <div id="toastContainer" class="position-fixed bottom-0 end-0 p-3" style="z-index: 1055;"></div>
+
+    <!-- Confirmation Modal for Scan Start -->
+    <div class="modal fade" id="scanStartedModal" tabindex="-1" aria-labelledby="scanStartedModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="scanStartedModalLabel">Scan Started</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <p>Your scan has been started successfully.</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    </nav>
+
+    <div id="layoutSidenav">
+        <div id="layoutSidenav_nav">
+            <nav class="sb-sidenav accordion sb-sidenav-dark" id="sidenavAccordion">
+                {% include '/sidebar.html' %}
+            </nav>
+        </div>
+
+        <div id="layoutSidenav_content">
+            <main>
+                <div class="container">
+                    <h2 class="my-4">Assets</h2>
+
+                    {% if is_admin %}
+                    <!-- Admin View: Overall First -->
+                    {% if "Overall" in company_assets %}
+                        <div class="card mb-4">
+                            <div class="card-header">
+                                <i class="fas fa-building me-1"></i> Admin
+                            </div>
+                            <div class="card-body">
+                                <table id="overallTable" class="table table-striped table-bordered admin-assets-table assets-table">
+                                    <thead>
+                                        <tr>
+                                            <th>IP Address Range</th>
+                                            <th>Active Assets</th>
+                                            <th>SSH Key</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {% for asset in company_assets["Overall"] %}
+                                        <tr>
+                                            <td>{{ asset.Valid_IP_Range }}</td>
+                                            <td>
+                                                {% if asset["Active_Assets"] %}
+                                                    {% set active_assets = asset["Active_Assets"].split(',') %}
+                                                    <div class="active-assets">
+                                                        {% for ip in active_assets %}
+                                                            <div class="d-flex justify-content-between align-items-center mb-2 table_row_h">
+                                                                <span>{{ ip.strip() }}</span>
+                                                                <button class="btn btn-sm btn-danger table_row_h"
+                                                                onclick="confirmRemove('{{ company }}', '{{ asset['Valid_IP_Range'] }}', '{{ ip.strip() }}', 'ip-{{ asset['Valid_IP_Range'].replace('.', '-') }}')">
+                                                                    <i class="fas fa-times"></i>
+                                                                </button>
+                                                            </div>
+                                                            {% if not loop.last %}
+                                                                <hr class="active-ip-divider">
+                                                            {% endif %}
+                                                        {% endfor %}
+                                                    </div>
+                                                {% else %}
+                                                    No Active Assets
+                                                {% endif %}
+                                            </td>
+                                            <td>
+                                                {% if asset["Active_Assets"] %}
+                                                    {% set active_assets = asset["Active_Assets"].split(',') %}
+                                                    <div class="active-assets">
+                                                        {% for ip in active_assets %}
+                                                            <div class="d-flex justify-content-between align-items-center mb-2 table_row_h">
+                                                                <span>{{ credentials_present.get(ip.strip('\n').strip(), 'No') }}</span>
+                                                            </div>
+                                                            {% if not loop.last %}
+                                                                <hr class="active-ip-divider">
+                                                            {% endif %}
+                                                        {% endfor %}
+                                                    </div>
+                                                {% else %}
+                                                    <div class="d-flex justify-content-between align-items-center mb-2 table_row_h">
+                                                        <span>No</span>
+                                                    </div>
+                                                {% endif %}
+                                            </td>
+                                        </tr>
+                                        {% endfor %}
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    {% endif %}
+                
+                    <!-- Admin View: Other Companies Alphabetically -->
+                    {% for company, assets in company_assets.items() | list | sort(attribute=0) %}
+                        {% if company != "Overall" %}
+                            <div class="card mb-4">
+                                <div class="card-header">
+                                    <i class="fas fa-building me-1"></i> {{ company }}
+                                </div>
+                                <div class="card-body">
+                                    <table id="table-{{ loop.index }}" class="table table-striped table-bordered admin-assets-table">
+                                        <thead>
+                                            <tr>
+                                                <th>IP Address Range</th>
+                                                <th>Active Assets</th>
+                                                <th>SSH Key</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            {% for asset in assets %}
+                                            <tr>
+                                                <td>{{ asset.Valid_IP_Range }}</td>
+                                                <td>
+                                                    {% if asset["Active_Assets"] %}
+                                                        {% set active_assets = asset["Active_Assets"].split(',') %}
+                                                        <div class="active-assets">
+                                                            {% for ip in active_assets %}
+                                                                <div class="d-flex justify-content-between align-items-center mb-2 table_row_h">
+                                                                    <span>{{ ip.strip() }}</span>
+                                                                    <button class="btn btn-sm btn-danger table_row_h"
+                                                                    onclick="confirmRemove('{{ company }}', '{{ asset['Valid_IP_Range'] }}', '{{ ip.strip() }}', 'ip-{{ asset['Valid_IP_Range'].replace('.', '-') }}')">
+                                                                        <i class="fas fa-times"></i>
+                                                                    </button>
+                                                                </div>
+                                                                {% if not loop.last %}
+                                                                    <hr class="active-ip-divider">
+                                                                {% endif %}
+                                                            {% endfor %}
+                                                        </div>
+                                                    {% else %}
+                                                        No Active Assets
+                                                    {% endif %}
+                                                </td>
+                                                <td>
+                                                    {% if asset["Active_Assets"] %}
+                                                        {% set active_assets = asset["Active_Assets"].split(',') %}
+                                                        <div class="active-assets">
+                                                            {% for ip in active_assets %}
+                                                                <div class="d-flex justify-content-between align-items-center mb-2 table_row_h">
+                                                                    <span>{{ credentials_present.get(ip.strip('\n').strip(), 'No') }}</span>
+                                                                </button>
+                                                                </div>
+                                                                {% if not loop.last %}
+                                                                    <hr class="active-ip-divider">
+                                                                {% endif %}
+                                                            {% endfor %}
+                                                        </div>
+                                                    {% else %}
+                                                        <div class="d-flex justify-content-between align-items-center mb-2 table_row_h">
+                                                            <span>No</span>
+                                                        </div>
+                                                    {% endif %}
+                                                </td>
+                                            </tr>
+                                            {% endfor %}
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        {% endif %}
+                    {% endfor %}
+                {% endif %}
+                
+                <!-- Non-Admin View: Single table for the user's company -->
+                {% if not is_admin %}
+                    <table id="userAssetsTable" class="table table-striped table-bordered assets-table">
+                        <thead>
+                            <tr>
+                                <th>IP Address Range</th>
+                                <th>Active Assets</th>
+                                <th>SSH Key</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for asset in assets %}
+                                <tr>
+                                    <td>{{ asset.Valid_IP_Range }}</td>
+                                    <td>
+                                        {% if asset["Active_Assets"] %}
+                                            {% set active_assets = asset["Active_Assets"].split(',') %}
+                                            <div class="active-assets">
+                                                {% for ip in active_assets %}
+                                                    <div class="d-flex justify-content-between align-items-center mb-2 table_row_h">
+                                                        <span>{{ ip.strip() }}</span>
+                                                        <button class="btn btn-sm btn-danger table_row_h"
+                                                        onclick="confirmRemove('{{ "" }}', '{{ asset['Valid_IP_Range'] }}', '{{ ip.strip() }}', 'ip-{{ asset['Valid_IP_Range'].replace('.', '-') }}')">
+                                                            <i class="fas fa-times"></i>
+                                                        </button>
+                                                    </div>
+                                                    {% if not loop.last %}
+                                                        <hr class="active-ip-divider">
+                                                    {% endif %}
+                                                {% endfor %}
+                                            </div>
+                                        {% else %}
+                                            No Active Assets
+                                        {% endif %}
+                                    </td>
+                                    
+                                    <td>
+                                        {% if asset["Active_Assets"] %}
+                                            {% set active_assets = asset["Active_Assets"].split(',') %}
+                                            <div class="active-assets">
+                                                {% for ip in active_assets %}
+                                                    <div class="d-flex justify-content-between align-items-center mb-2 table_row_h">
+                                                        <span>{{ credentials_present.get(ip.strip('\n').strip(), 'No') }}</span>
+                                                    </div>
+                                                    {% if not loop.last %}
+                                                        <hr class="active-ip-divider">
+                                                    {% endif %}
+                                                {% endfor %}
+                                            </div>
+                                        {% else %}
+                                            <div class="d-flex justify-content-between align-items-center mb-2 table_row_h">
+                                                <span>No</span>
+                                            </div>
+                                        {% endif %}
+                                    </td>
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                {% endif %}
+                </div>
+            </main>
+        </div>
+    </div>
+
+    <!-- JavaScript -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.13.6/js/dataTables.bootstrap5.min.js"></script>
+    <script src="../static/cdn/popper.min.js"></script>
+    <script src="../static/cdn/bootstrap.min.js"></script>
+
+
+    <script>
+        $(document).ready(function () {
+            // Initialize DataTables for Admin View (Multiple Tables)
+            $('.admin-assets-table').each(function () {
+                $(this).DataTable({
+                    paging: true,
+                    searching: true,
+                    ordering: true
+                });
+            });
+
+            // Initialize DataTables for Non-Admin View (Single Table)
+            $('#userAssetsTable').DataTable({
+                paging: true,
+                searching: true,
+                ordering: true
+            });
+        });
+    </script>
+
+
+    <script>
+        $(document).ready(function () {
+            // Variable to track scan status
+            let scanInProgress = false;
+
+            // Fetch and Populate Dropdown
+            $('#startScanBtn').click(function () {
+                if (scanInProgress) return; // Do nothing if a scan is in progress
+
+                const modal = new bootstrap.Modal(document.getElementById('assetScanModal'));
+                modal.show();
+
+                $.ajax({
+                    url: '/get_validated_ip_ranges',
+                    type: 'GET',
+                    success: function (response) {
+                        if (response.success) {
+                            const dropdown = $('#assetIpRangeDropdown');
+                            dropdown.empty();
+                            dropdown.append('<option selected disabled>Select a Validated IP Range</option>');
+                            response.data.forEach(ipRange => dropdown.append(`<option value="${ipRange}">${ipRange}</option>`));
+                            $('#confirmAssetScan').prop('disabled', false);
+                        } else {
+                            alert(response.error || 'Failed to fetch validated IP ranges.');
+                        }
+                    },
+                    error: function () {
+                        alert('Error fetching validated IP ranges.');
+                    }
+                });
+            });
+
+            // Cleanup when the modal is closed
+            $('#assetScanModal').on('hidden.bs.modal', function () {
+                // Remove lingering modal backdrop
+                $('.modal-backdrop').remove();
+                $('body').removeClass('modal-open');
+                $('body').css('overflow', 'auto'); // Restore scrolling behavior
+            });
+
+            // Confirm Scan
+            $('#confirmAssetScan').click(function () {
+                const selectedIp = $('#assetIpRangeDropdown').val();
+                if (!selectedIp) {
+                    showToast('Please select an IP range!', 'error'); // Show error toast if no IP range is selected
+                    return;
+                }
+
+                // Hide the modal programmatically
+                const modal = bootstrap.Modal.getInstance(document.getElementById('assetScanModal'));
+                modal.hide();
+
+                // Remove lingering modal backdrop
+                $('.modal-backdrop').remove();
+                $('body').removeClass('modal-open');
+                $('body').css('overflow', 'auto');
+
+                // Show toast notification for scan start
+                showToast(`Scan started for IP range: ${selectedIp}`, 'success');
+
+                // Disable the Start Scan button and show loading state
+                $('#startScanBtn').prop('disabled', true);
+                $('#assetLoadingSpinner').show();
+
+                // Trigger the Scan
+                $.ajax({
+                    url: '/checkassets',
+                    type: 'GET',
+                    data: { valid_ip: selectedIp },
+                    success: function (response) {
+                        if (response.success) {
+                            // Show success toast if the scan completes successfully
+                            showToast("Scan completed successfully! Refreshing the page...", 'success');
+                            setTimeout(() => {
+                                location.reload(); // Refresh the page after showing the toast
+                            }, 2000); // Wait 2 seconds before refreshing the page
+                        } else {
+                            // Show error toast if the server indicates a failure
+                            showToast(response.message || 'Failed to start the scan.', 'error');
+                        }
+                    },
+                    error: function (xhr, status, error) {
+                        // Display error toast for network or server issues
+                        const errorMessage = xhr.responseJSON?.error || `Error: ${status} - ${error}`;
+                        showToast(errorMessage, 'error');
+                    },
+                    complete: function () {
+                        // Re-enable the Start Scan button after completion
+                        $('#startScanBtn').prop('disabled', false);
+                        $('#assetLoadingSpinner').hide();
+                    }
+                });
+            });
+
+
+            // Toast Notification Function
+            function showToast(message, type = 'success') {
+                const toastContainer = $('#toastContainer');
+                const bgColorClass = type === 'success' ? 'text-bg-success' : 'text-bg-danger'; // Different background color for errors
+
+                toastContainer.html(`
+        <div class="toast align-items-center ${bgColorClass} border-0" role="alert" aria-live="assertive" aria-atomic="true">
+            <div class="d-flex">
+                <div class="toast-body">${message}</div>
+                <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
+            </div>
+        </div>
+    `);
+
+                const toast = new bootstrap.Toast(toastContainer.find('.toast'));
+                toast.show();
+            }
+        
+
+        });
+
+    </script>
+
+     <!-- JS to handle addCredential modal -->
+    <script>
+        $(document).ready(function () {
+            $('#addCredentialBtn').click(function () {
+                // Fetch IP addresses when the page loads
+                const ipDropdown = document.getElementById('ipAddressDropdown');
+
+                fetch('/credential_get_ip_addresses')
+                    .then(response => {
+                        if (!response.ok) {
+                            throw new Error('Network response was not ok');
+                        }
+                        return response.json();
+                    })
+                    .then(result => {
+                        if (!result.success || !Array.isArray(result.data) || result.data.length === 0) {
+                            throw new Error(result.error || 'No IP addresses found');
+                        }
+
+                        ipDropdown.innerHTML = '<option disabled selected>Select an IP Address</option>';
+
+                        // Populate the dropdown with IP addresses
+                        result.data.forEach(ip => {
+                            const option = document.createElement('option');
+                            option.name = 'ip_address';
+                            option.value = ip;
+                            option.textContent = ip;
+                            ipDropdown.appendChild(option);
+                        });
+                    })
+                    .catch(error => {
+                        console.error('Error fetching IP addresses:', error);
+                        ipDropdown.innerHTML = '<option disabled selected>Error loading IP addresses</option>';
+                    });
+            });
+
+            // Disable confirm button until a valid selection is made
+            $('#ipAddressDropdown, #inputCredential').on('input', function () {
+                var ip = $('#ipAddressDropdown').val();
+                var key = $('#inputCredential').val();
+                $('#confirmAddCredential').prop('disabled', !(ip && key));
+            });
+
+            // Handle confirm button click
+            $('#confirmAddCredential').click(function () {
+                const form = $('#credentialForm');
+                const formData = form.serialize();  // Serialize the form data to send it via AJAX
+
+                // Make an AJAX call to save the credential
+                $.ajax({
+                    url: '/save_credentials',
+                    type: 'POST',
+                    data: formData,
+                    success: function (response) {
+                        if (response.success) {
+                            location.reload();  // Reload the page to show the updated credentials
+                        } else {
+                            // Show the error message in the modal
+                            $('#errorMessage').removeClass('d-none').text(response.message || 'Failed to save credentials.');
+
+                            // Since try again, disable the btn to submit 
+                            $('#confirmAddCredential').prop('disabled', false);  
+                        }
+                    },
+                    error: function () {
+                        // Put in the err msg - in this case specifically checking for SSH key validity
+                        $('#errorMessage').removeClass('d-none').text('Invalid SSH Private Key format. Please try again');
+
+                        // Since try again, disable the btn to submit 
+                        $('#confirmAddCredential').prop('disabled', false);  
+
+                        // Clear the textarea so can re-enter
+                        $('#inputCredential').val('');
+                    }
+                });
+            });
+
+            // Clear modal content when modal is closed or when clicked outside
+            $('#addCredentialModal').on('hidden.bs.modal', function () {
+                $('#credentialForm')[0].reset();  // Reset the form content
+                $('#errorMessage').addClass('d-none'); // Hide the error message
+                $('#confirmAddCredential').prop('disabled', true); // Disable the confirm button again
+            });
+
+            // Clear form when the page reloads
+            $('#credentialForm')[0].reset(); // Reset the form on page load
+        });
+
+
+    </script>
+
+    <!-- JS to handle deleting assets & related info from db -->
+    <script>
+        function confirmRemove(company, ipRange, ip, elementId) {
+            let confirmMessage;
+
+            if (company === '') {
+                confirmMessage = `Are you sure you want to remove ${ip} from ${ipRange} for your company?`;
+            } else {
+                confirmMessage = `Are you sure you want to remove ${ip} from ${ipRange} for ${company}?`;
+            }
+
+            if (confirm(confirmMessage)) {
+                removeAsset(company, ipRange, ip, elementId);
+            }
+        }
+
+        function removeAsset(company, ipRange, ip, elementId) {
+            $.ajax({
+                url: '/remove_asset',
+                type: 'POST',
+                contentType: 'application/json',
+                data: JSON.stringify({ 
+                    company: company,  // Pass the company to the backend
+                    ip_range: ipRange, 
+                    ip: ip 
+                }),
+                success: function (response) {
+                    if (response.success) {
+                        alert('Asset removed successfully.');
+                        location.reload();
+                    } else {
+                        alert(response.message || 'Failed to remove the asset.');
+                    }
+                },
+                error: function () {
+                    alert('Failed to remove the asset.');
+                }
+            });
+        }
+    </script>
+
+
+</body>
+
+</html>

@@ -1,0 +1,44 @@
+services:  
+  web-portal:      
+    build:        
+      context: .        
+      dockerfile: Dockerfile    
+    
+    expose:
+      - "3000"
+
+    volumes:     
+      - .:/app:cached      
+      - commandhistory:/commandhistory    
+
+    environment:
+     - VALIDATEURL=https://fastapi:8050
+     - FASTAPI_URL=https://v2-fastapi-1:9001/cve_lookup
+
+
+    networks:
+      - my_network
+
+    command: ["python", "/app/app.py"]
+
+  reverseproxy:
+    build:
+      context: ./nginx
+      dockerfile: Dockerfile
+    ports:
+      - "443:443" 
+      - "3000:3000"
+    
+    depends_on:
+      - web-portal
+      
+    networks:
+      - my_network
+
+
+networks:
+  my_network:
+    external: true
+    
+volumes:  
+  commandhistory: null 

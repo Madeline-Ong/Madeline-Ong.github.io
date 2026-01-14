@@ -1,0 +1,61 @@
+<div id="layoutSidenav_nav">
+    <nav class="sb-sidenav accordion sb-sidenav-dark" id="sidenavAccordion">
+        <div class="sb-sidenav-menu">
+            <div class="nav">
+                <a class="nav-link" href="{{ url_for('main_page') }}">
+                    <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
+                    Overview
+                </a>
+                <a class="nav-link" href="{{ url_for('assets') }}">
+                    <div class="sb-nav-link-icon"><i class="fas fa-table"></i></div>
+                    Assets
+                </a>
+                <a class="nav-link" href="{{ url_for('services') }}">
+                    <div class="sb-nav-link-icon"><i class="fas fa-table"></i></div>
+                    Services
+                </a>
+                <a class="nav-link" href="{{ url_for('cve') }}">
+                    <div class="sb-nav-link-icon"><i class="fas fa-chart-area"></i></div>
+                    CVE
+                </a>
+                <a class="nav-link" href="{{ url_for('account') }}">
+                    <div class="sb-nav-link-icon"><i class="fas fa-user"></i></div>
+                    Account
+                </a>
+                 <!-- Admin-Specific Links -->
+                {% if session.get('user_role') == 'Admin' %}
+            <a class="nav-link" href="{{ url_for('admin') }}">
+                <div class="sb-nav-link-icon"><i class="fas fas fa-users"></i></div>
+                Admin Management
+            </a>
+            <a class="nav-link" href="{{ url_for('adminlogs') }}">
+                <div class="sb-nav-link-icon"><i class="fas fa-history"></i></div>
+                Admin Logs
+            </a>
+            {% endif %}
+
+            <!-- Boss-Specific Links -->
+            {% if session.get('user_role') == 'Boss' %}
+            <a class="nav-link" href="{{ url_for('boss') }}">
+                <div class="sb-nav-link-icon"><i class="fas fa-users"></i></div>
+                Employee Management
+            </a>
+            <a class="nav-link" href="{{ url_for('bosslogs') }}">
+                <div class="sb-nav-link-icon"><i class="fas fa-history"></i></div>
+                Boss Logs
+            </a>
+            {% endif %}
+            </div>
+        </div>
+
+        <!-- Logout Button -->
+        <div class="sb-sidenav-footer">
+            <a class="nav-link" href="{{ url_for('logout') }}">
+                <div class="sb-nav-link-icon"><i class="fas fa-sign-out-alt"></i></div>
+                Logout
+            </a>
+        </div>
+    </nav>
+</div>
+
+                

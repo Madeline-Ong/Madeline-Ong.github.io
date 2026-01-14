@@ -1,0 +1,14 @@
+services:
+  fastapi:
+    build: .
+    ports:
+      - "8000:8000" # Expose FastAPI web app on port 8000 for HTTP
+    volumes:
+      - .:/services
+      - ./certs:/certs
+    networks:
+      - my_network
+
+networks:
+ my_network:
+  external: true
