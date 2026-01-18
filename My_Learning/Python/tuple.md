@@ -1,4 +1,4 @@
-TODO: to be organised but things i've learnt
+TODO: to be organised but things i've learnt  
 credit to: https://pynative.com/python-tuple-exercise-with-solutions/
 
 
@@ -38,7 +38,7 @@ for student in students:
 print(f"Students with scores 90 or above (loop method): {high_achievers_loop}")
 ```
 so i thought abt why this was the model, and rmb that in clean code: keep it simple. should not initalise more than you need
-in this case, the variable 'name' wasnt used on its own (eg to perform an operation), so instead i could have just referenced it (like shown in the ans)
+in this case, the variable `name` wasnt used on its own (eg to perform an operation), so instead i could have just referenced it (like shown in the ans)
 <br><br>
 
 
@@ -78,11 +78,13 @@ for num in t:
 print(f"Squared tuple (loop): {squared_tuple_loop}")
 ```
 
-i think my way of doing was technically mtd 1, but lamba might be more efficient since the named functions are already defined
-
+i think my way of doing was technically mtd 1, but lamba might be more efficient since the named functions are already defined.  
 looking at the lamba version made me think of using list comprehension:
 ```
 squared_tuple = tuple(x**2 for x in t)
 ```
 
 but would need to test to be sure whihc is most efficient
+<br><br>
+
+
